@@ -3,19 +3,23 @@ import Signup from "../pages/auth/Singup";
 import Signin from "../pages/auth/Signin";
 import App from "../App";
 import Homepage from "../pages/Homepage";
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
-import PrivateRoute from "@/components/PrivateRoute";
+import PrivateRoute from "@/pages/auth/PrivateRoute";
+import { Createpost } from "@/pages/Createpost";
 
 export const router = createBrowserRouter([
     {path: "/", element: <App/>},
     {path: "/signup", element: <Signup/>},
     {path: "/signin", element: <Signin/>},
-    {path: "/home", element: <Homepage/>},
+    {path: "/home", element: (
+            <PrivateRoute>
+                <Homepage />
+            </PrivateRoute>
+    )},
     {
         path: "/create-blog",
         element: (
             <PrivateRoute>
-                <SimpleEditor/>
+                <Createpost/>
             </PrivateRoute>
     )},
     {path: "*", element: <div>404 Not Found</div>},

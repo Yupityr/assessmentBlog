@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
+import { Editor, EditorContent, EditorContext, useEditor } from "@tiptap/react"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
@@ -183,7 +183,11 @@ const MobileToolbarContent = ({
   </>
 )
 
-export function SimpleEditor() {
+interface SimpleEditorProps {
+  onEditorReady?: (editor: Editor) => void
+}
+
+export function SimpleEditor({ onEditorReady }: SimpleEditorProps) {
   const isMobile = useIsBreakpoint()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
@@ -242,6 +246,12 @@ export function SimpleEditor() {
     }
   }, [isMobile, mobileView])
 
+  useEffect(() => {
+  if (editor && onEditorReady) {
+    onEditorReady(editor);
+  }
+  }, [editor, onEditorReady]);
+
   return (
     <div className="simple-editor-wrapper">
       <EditorContext.Provider value={{ editor }}>
@@ -278,3 +288,6 @@ export function SimpleEditor() {
     </div>
   )
 }
+
+
+

@@ -36,15 +36,6 @@ const SignUpPage = () => {
       </Link>
       <form className="main-container flex flex-col" onSubmit={handleSubmit}>
         <h1 className="header-text">Sign Up</h1>
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "0.8rem",
-            color: "#777",
-          }}
-        >
-          Demo app, please don't use your real email or password
-        </p>
         <input
           name="email"
           onChange={handleInputChange}

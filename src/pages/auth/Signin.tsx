@@ -5,7 +5,7 @@ import { supabase } from "@/supabase/supabaseClient";
 
 const Signin = () => {
   const { session } = useSession();
-  if (session) return <Navigate to="/" />;
+  if (session) return <Navigate to="/home" />;
   const [status, setStatus] = useState("");
   const [formValues, setFormValues] = useState({
     email: "",
@@ -30,7 +30,7 @@ const Signin = () => {
   };
   return (
     <main className="text-center ">
-      <Link className="home-link" to="/">
+      <Link className="home-link" to="/home">
         ◄ Home
       </Link>
       <form className="flex flex-col" onSubmit={handleSubmit}>
