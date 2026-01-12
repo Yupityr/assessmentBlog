@@ -1,10 +1,12 @@
 import {createBrowserRouter} from "react-router-dom";
-import Signup from "./components/Signup";
-import Signin from "./components/Signin";
-import App from "./App";
+import Signup from "./pages/auth/Singup";
+import Signin from "./pages/auth/Signin";
+import Homepage from "./pages/Homepage";
+// import { SimpleEditor } from "./components/tiptap-templates/simple/simple-editor";
+// import App from "./App";
 
 export const router = createBrowserRouter([
-    {path: "/", element: <App/>},
+    {path: "/", element: <Homepage/>},
     {path: "/signup", element: <Signup/>},
     {path: "/signin", element: <Signin/>},
 
