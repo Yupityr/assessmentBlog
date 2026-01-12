@@ -4,14 +4,8 @@ import { supabase } from "@/supabase/supabaseClient";
 import { useSession } from "@/context/AuthContext";
 
 const SignUpPage = () => {
-  // ==============================
-  // If user is already logged in, redirect to home
-  // This logic is being repeated in SignIn and SignUp..
   const { session } = useSession();
   if (session) return <Navigate to="/" />;
-  // maybe we can create a wrapper component for these pages
-  // just like the ./router/AuthProtectedRoute.tsx? up to you.
-  // ==============================
   const [status, setStatus] = useState("");
   const [formValues, setFormValues] = useState({
     email: "",
