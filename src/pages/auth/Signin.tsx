@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useSession } from "@/context/AuthContext";
-import { supabase } from "@/supabase/supabaseClient";
+import { supabase } from "@/services/supabaseClient";
 
 const Signin = () => {
   const { session } = useSession();
@@ -16,7 +16,7 @@ const Signin = () => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("Logging in...");
     const { error } = await supabase.auth.signInWithPassword({
@@ -29,31 +29,34 @@ const Signin = () => {
     setStatus("");
   };
   return (
-    <main className="text-center ">
-      <Link className="home-link" to="/home">
-        ◄ Home
-      </Link>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <h1 className="header-text">Sign In</h1>
-        <input
-          name="email"
-          onChange={handleInputChange}
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          name="password"
-          onChange={handleInputChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button type="submit">Login</button>
-        <Link className="auth-link" to="/Signup">
-          Don't have an account? Sign Up
-        </Link>
-        {status && <p>{status}</p>}
+    <div>
+      <form onSubmit={handleSignin} className="max-w-md m-auto pt-24">
+        <h2 className="font-bold pb-2">Sign in</h2>
+        <p>
+          Don't have an account yet? <Link to="/signup">Sign up</Link>
+        </p>
+        <div className="flex flex-col py-4">
+          <input
+            className="p-3 mt-2"
+            name="email"
+            onChange={handleInputChange}
+            type="email"
+            placeholder="Email"
+          />
+        </div>
+        <div className="flex flex-col py-4">
+          <input
+            className="p-3 mt-2"
+            name="password"
+            onChange={handleInputChange}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit" className="w-full mt-4">Sign In</button>
+        {status && <p className="text-center">{status}</p>}
       </form>
-    </main>
+    </div>
   );
 }
 
