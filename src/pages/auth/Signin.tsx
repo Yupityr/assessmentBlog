@@ -12,6 +12,8 @@ const Signin = () => {
     password: "",
   });
 
+  const isDisabled = !formValues.email || !formValues.password;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
@@ -31,10 +33,7 @@ const Signin = () => {
   return (
     <div>
       <form onSubmit={handleSignin} className="max-w-md m-auto pt-24">
-        <h2 className="font-bold pb-2">Sign in</h2>
-        <p>
-          Don't have an account yet? <Link to="/signup">Sign up</Link>
-        </p>
+        <h2 className="text-center font-bold pb-2">Sign in to Hermod</h2>
         <div className="flex flex-col py-4">
           <input
             className="p-3 mt-2"
@@ -53,7 +52,10 @@ const Signin = () => {
             placeholder="Password"
           />
         </div>
-        <button type="submit" className="w-full mt-4">Sign In</button>
+        <button disabled={isDisabled} type="submit" className="w-full mt-4">Sign In</button>
+        <p className="text-center pt-4">
+          <Link to="/signup">Create new account</Link>
+        </p>
         {status && <p className="text-center">{status}</p>}
       </form>
     </div>

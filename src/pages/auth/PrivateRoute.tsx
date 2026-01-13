@@ -1,11 +1,11 @@
 import React from "react";
-import { useSession as UserAuth } from "@/context/AuthContext";
+import { useSession  } from "@/context/AuthContext";
 import { Navigate } from "react-router-dom";
 
 type Props = {children: React.ReactNode;};
 
 const PrivateRoute = ({ children }: Props) => {
-  const { session } = UserAuth();
+  const { session } = useSession();
 
   if (session === undefined) {
     return <div>Loading...</div>;

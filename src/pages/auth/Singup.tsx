@@ -12,6 +12,9 @@ const SignUpPage = () => {
     password: "",
   });
 
+  const isDisabled = !formValues.email || !formValues.password;
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
@@ -30,37 +33,9 @@ const SignUpPage = () => {
   };
 
   return (
-    // <main className="text-center ">
-    //   <Link className="home-link" to="/">
-    //     ◄ Home
-    //   </Link>
-    //   <form className="main-container flex flex-col" onSubmit={handleSubmit}>
-    //     <h1 className="header-text">Sign Up</h1>
-    //     <input
-    //       name="email"
-    //       onChange={handleInputChange}
-    //       type="email"
-    //       placeholder="Email"
-    //     />
-    //     <input
-    //       name="password"
-    //       onChange={handleInputChange}
-    //       type="password"
-    //       placeholder="Password"
-    //     />
-    //     <button type="submit">Create Account</button>
-    //     <Link className="auth-link" to="/Signin">
-    //       Already have an account? Sign In
-    //     </Link>
-    //     {status && <p>{status}</p>}
-    //   </form>
-    // </main>
     <div>
       <form onSubmit={handleSignUp} className="max-w-md m-auto pt-24">
-        <h2 className="font-bold pb-2">Sign up today!</h2>
-        <p>
-          Already have an account? <Link to="/">Sign in</Link>
-        </p>
+        <h2 className="text-center font-bold pb-2">Sign up for Hermod</h2>
         <div className="flex flex-col py-4">
           <input
             onChange={handleInputChange}
@@ -81,7 +56,10 @@ const SignUpPage = () => {
             placeholder="Password"
           />
         </div>
-        <button type="submit" className="w-full mt-4">Sign Up</button>
+        <button disabled={isDisabled} type="submit" className="w-full mt-4">Sign Up</button>
+        <p className="text-center pt-4">
+          <Link to="/">Already have an account?</Link>
+        </p>
         {status && <p>{status}</p>}
       </form>
     </div>
