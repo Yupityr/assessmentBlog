@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { supabase } from "@/services/supabaseClient";
 import { useSession } from "@/context/AuthContext";
+import Blogcard from "./components/Blogcard";
 
 const Homepage = () => {
   const { session } = useSession();
@@ -17,6 +18,7 @@ const Homepage = () => {
         <Link to="/create-blog">Create a Blog</Link>
         <div id="divider"></div>
       </section>
+      <Blogcard />
     </main>
   );
 };

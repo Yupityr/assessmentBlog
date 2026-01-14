@@ -6,13 +6,14 @@ import PrivateRoute from "@/pages/auth/PrivateRoute";
 import { Createpost } from "@/pages/Createpost";
 import Layout from "@/pages/Layout";
 import AuthProtectedRoute from "./AuthProtectedRoute";
+import Landingpage from "@/pages/Landingpage";
 
 export const router = createBrowserRouter([
     {
         path: "/", 
         element: <Layout/>,
         children: [
-            {path: "/", element: <Signin/>},
+            {path: "/", element: <Landingpage/>},
             {path: "/signup", element: <Signup/>},
             {path: "/signin", element: <Signin/>},
             {

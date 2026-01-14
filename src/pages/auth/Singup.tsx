@@ -5,7 +5,7 @@ import { useSession } from "@/context/AuthContext";
 
 const SignUpPage = () => {
   const { session } = useSession();
-  if (session) return <Navigate to="/" />;
+  if (session) return <Navigate to="/home" />;
   const [status, setStatus] = useState("");
   const [formValues, setFormValues] = useState({
     email: "",
@@ -39,17 +39,17 @@ const SignUpPage = () => {
         <div className="flex flex-col py-4">
           <input
             onChange={handleInputChange}
-            className="p-3 mt-2"
+            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             type="email"
             name="email"
             id="email"
             placeholder="Email"
           />
         </div>
-        <div className="flex flex-col py-4">
+        <div className="flex flex-col py-4 ">
           <input
             onChange={handleInputChange}
-            className="p-3 mt-2"
+            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             type="password"
             name="password"
             id="password"

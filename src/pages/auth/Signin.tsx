@@ -36,7 +36,7 @@ const Signin = () => {
         <h2 className="text-center font-bold pb-2">Sign in to Hermod</h2>
         <div className="flex flex-col py-4">
           <input
-            className="p-3 mt-2"
+            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             name="email"
             onChange={handleInputChange}
             type="email"
@@ -45,7 +45,7 @@ const Signin = () => {
         </div>
         <div className="flex flex-col py-4">
           <input
-            className="p-3 mt-2"
+            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             name="password"
             onChange={handleInputChange}
             type="password"
