@@ -8,6 +8,7 @@ import Layout from "@/pages/Layout";
 import AuthProtectedRoute from "./AuthProtectedRoute";
 import Landingpage from "@/pages/Landingpage";
 import Viewpost from "@/pages/Viewpost";
+import Updatepost from "@/pages/Updatepost";
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/post/:postId", 
                         element: <Viewpost/>
+                    },
+                    {
+                        path:"/post/edit/:postId",
+                        element: <Updatepost/>
                     }
                 ]
             },

@@ -8,53 +8,6 @@ import { useState } from "react"
 import { useAppDispatch } from '@/app/store'
 import { createPost } from '@/features/postsSlice'
 
-// export const Createpost = () => {
-//     const [editor, setEditor] = useState<Editor | null>(null);
-//     const [blog, setBlog] = useState({title: "", body: ""});
-    
-//     const createPost = async (e:any) => {
-//         e.preventDefault()
-
-//         const payload = {
-//             title: blog.title,
-//             body: editor?.getJSON(),
-//         }
-
-//         const {error} = await supabase.from("blogs").insert(payload)
-
-//         if (error) {
-//             console.error("Failed to create post", error)
-//             return
-//         }
-
-//     };
-
-    
-//     const check = () =>{
-//         const payload = {
-//             title: blog.title,
-//             body: editor?.getJSON(),
-//         }
-//         console.log(payload);
-        
-//     }
-    
-
-//     return (
-//         <>
-            
-//             <div >
-//                 <div className="flex justify-between my-2 mx-4">
-//                     <input className="text-3xl" type="text" placeholder="Insert Title" onChange={(e) => setBlog((prev) => ({...prev, title: e.target.value}))}/>
-//                     <button onClick={createPost}>
-//                         Post
-//                     </button>
-//                 </div>
-//                 <SimpleEditor onEditorReady={setEditor} />
-//             </div>
-//         </>
-//     );
-// }
 
 export const Createpost = () => {
     const dispatch = useAppDispatch()

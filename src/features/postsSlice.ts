@@ -1,6 +1,7 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
+import {createSlice, createAsyncThunk, type PayloadAction, current} from "@reduxjs/toolkit"
 import { supabase } from "@/services/supabaseClient";
 import type { RootState } from "@/app/store";
+// import { Editor } from "@tiptap/react"
 
 export interface Post{
     id:number,
@@ -41,8 +42,9 @@ const postSlice = createSlice({
     name:"post",
     initialState,
     reducers:{
-        onNextPage: () => {},
-        onPrevPage: () => {}
+        setPage: (state, action:PayloadAction<number>) => {
+            state.pagination.currentPage = action.payload
+        },
     },
     extraReducers:(builder) => {
         builder
@@ -53,8 +55,18 @@ const postSlice = createSlice({
             state.posts = action.payload.posts;
             state.pagination.totalItems = action.payload.total
             state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
-            
+
             // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
+        })
+        .addCase(updatePost.fulfilled, (state, action) => {
+            const index = state.posts.findIndex(
+                post => post.post_id === action.payload.post_id
+            )
+
+            if (index !== -1) {
+                state.posts[index] = action.payload
+            }
+            console.log("hello");
         })
     }
 });
@@ -90,6 +102,23 @@ export const createPost = createAsyncThunk('posts/createPosts',
     }
 )
 
+export const updatePost = createAsyncThunk<Post,{ post_id: string | undefined; title: string | undefined; body: any}>('posts/updatePost',
+    async ({ post_id, title, body }, { rejectWithValue }) => {
+    const { data, error } = await supabase
+      .from('blogs')
+      .update({ title, body })
+      .eq('post_id', post_id)
+      .select()
+      .single()
+
+    if (error) {
+      return rejectWithValue(error.message)
+    }
+
+    return data
+  }
+)
+
 // edit thunk
 
 // delete thunk
@@ -97,3 +126,4 @@ export const createPost = createAsyncThunk('posts/createPosts',
 
 
 export default postSlice.reducer;
+export const {setPage} = postSlice.actions
