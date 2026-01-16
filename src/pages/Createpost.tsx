@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/app/store'
 import { createPost } from '@/features/postsSlice'
 
 
-export const Createpost = () => {
+const Createpost = () => {
     const dispatch = useAppDispatch()
 
     const [title, setTitle] = useState('')
@@ -40,3 +40,5 @@ export const Createpost = () => {
         </>
     );
 }
+
+export default Createpost
