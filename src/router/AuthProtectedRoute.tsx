@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSession as UserAuth } from "@/context/AuthContext";
 
-const AuthProtectedRoute = () => {
+const Authprotectedroute = () => {
   const { session } = UserAuth();
   if (!session) {
     // or you can redirect to a different page and show a message
@@ -10,4 +10,4 @@ const AuthProtectedRoute = () => {
   return <Outlet />;
 };
 
-export default AuthProtectedRoute;
+export default Authprotectedroute;

@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 type Props = {children: React.ReactNode;};
 
-const PrivateRoute = ({ children }: Props) => {
+const Privateroute = ({ children }: Props) => {
   const { session } = useSession();
 
   if (session === undefined) {
@@ -14,4 +14,4 @@ const PrivateRoute = ({ children }: Props) => {
   return <div>{session ? <>{children}</> : <Navigate to="/signup" />}</div>;
 };
 
-export default PrivateRoute;
+export default Privateroute;

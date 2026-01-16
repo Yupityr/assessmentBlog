@@ -2,14 +2,14 @@ import {createBrowserRouter} from "react-router-dom";
 import Signup from "../pages/auth/Singup";
 import Signin from "../pages/auth/Signin";
 import Homepage from "../pages/Homepage";
-import PrivateRoute from "@/pages/auth/PrivateRoute";
 import { Createpost } from "@/pages/Createpost";
 import Layout from "@/pages/Layout";
-import AuthProtectedRoute from "./AuthProtectedRoute";
+import Authprotectedroute from "./Authprotectedroute";
 import Landingpage from "@/pages/Landingpage";
 import Viewpost from "@/pages/Viewpost";
 import Updatepost from "@/pages/Updatepost";
 import Userposts from "@/pages/Userposts";
+import Privateroute from "@/pages/auth/Privateroute";
 
 export const router = createBrowserRouter([
     {
@@ -22,9 +22,9 @@ export const router = createBrowserRouter([
             {
                 path: "/", 
                 element: (
-                <PrivateRoute>
-                    <AuthProtectedRoute/>
-                </PrivateRoute>
+                <Privateroute>
+                    <Authprotectedroute/>
+                </Privateroute>
             ),
                 children: [
                     {
