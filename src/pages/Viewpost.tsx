@@ -1,38 +1,30 @@
-import { useState } from "react";
-import { supabase } from "@/services/supabaseClient";
+// import { useState } from "react";
+// import { supabase } from "@/services/supabaseClient";
 import Readonlyeditor from "@/components/tiptap-templates/simple/Readonlyeditor";
+import { useParams } from "react-router-dom";
+import { useAppSelector,useAppDispatch } from "@/app/store";
+import { useEffect } from "react";
+import { fetchPosts } from "@/features/postsSlice";
 
 const Viewpost = () => {
-    const [post, setPost] = useState<any[]>([]);
+    const dispatch = useAppDispatch()
+    const params = useParams()
+
+    const blogs = useAppSelector((state) => state.posts.posts.find(p => p.post_id === params.postId))
 
 
-    const getPost = async () => {
+    useEffect(() => {
+        dispatch(fetchPosts())
+    },[dispatch])
 
-        const {error, data} = await supabase.from("blogs").select("*")
-
-        if (error) {
-            console.error("Failed to get post", error)
-            return
-        }
-
-        setPost(data)
-        console.log(data);
-    };
-
-    //we need use effect here for the posts
 
     return (
         <>
-            <button onClick={getPost}>
-                test
-            </button>
-            {post.map(post => (
-            <div>
-                <p>{post.title}</p>
-                <Readonlyeditor postContent={post.body}/>
-            </div>
-            ))}
-            <div>test</div>
+        <article>
+            {blogs?.title}
+            {blogs?.id}
+            <Readonlyeditor postContent={blogs?.body}/>
+        </article>
         </>
     );
 };

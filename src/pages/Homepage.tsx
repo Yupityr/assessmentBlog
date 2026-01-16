@@ -3,8 +3,10 @@ import { supabase } from "@/services/supabaseClient";
 import { useSession } from "@/context/AuthContext";
 import Blogcard from "./components/Blogcard";
 
+
 const Homepage = () => {
   const { session } = useSession();
+
   return (
     <main className="flex flex-col items-center justify-center  py-2">
       <section className="main-container">

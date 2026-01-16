@@ -3,9 +3,10 @@ import { supabase } from "@/services/supabaseClient";
 import type { RootState } from "@/app/store";
 
 export interface Post{
-    id:string,
+    id:number,
     title:string;
     body:any;
+    post_id:string
 }
 
 export interface paginationType{
@@ -50,10 +51,8 @@ const postSlice = createSlice({
         })
         .addCase(fetchPosts.fulfilled, (state,action) => {
             state.posts = action.payload.posts;
-            console.log(action.payload.total);
             state.pagination.totalItems = action.payload.total
             state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
-            console.log(state.pagination.totalPages);
             
             // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
         })
@@ -82,8 +81,7 @@ export const createPost = createAsyncThunk('posts/createPosts',
     async (newPost: {title: string; body:any; }) => {
         try {
            
-            const {data,error} = await supabase.from('blogs').insert([newPost]);
-            if(error)throw error;
+            const {data} = await supabase.from('blogs').insert([newPost]);
             return data;
             
         } catch (error:any){
@@ -91,6 +89,10 @@ export const createPost = createAsyncThunk('posts/createPosts',
         }
     }
 )
+
+// edit thunk
+
+// delete thunk
 
 
 

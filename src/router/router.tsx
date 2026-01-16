@@ -19,31 +19,23 @@ export const router = createBrowserRouter([
             {path: "/signin", element: <Signin/>},
             {
                 path: "/", 
-                element: <AuthProtectedRoute/>,
+                element: (
+                <PrivateRoute>
+                    <AuthProtectedRoute/>
+                </PrivateRoute>
+            ),
                 children: [
                     {
                         path: "/home", 
-                        element: (
-                            <PrivateRoute>
-                                <Homepage />
-                            </PrivateRoute>
-                        )
+                        element: <Homepage />
                     },
                     {
                         path: "/create-blog", 
-                        element: (
-                            <PrivateRoute>
-                                <Createpost/>
-                            </PrivateRoute>
-                        )
+                        element: <Createpost/>
                     },
                     {
-                        path: "/view-post", 
-                        element: (
-                            <PrivateRoute>
-                                <Viewpost/>
-                            </PrivateRoute>
-                        )
+                        path: "/post/:postId", 
+                        element: <Viewpost/>
                     }
                 ]
             },

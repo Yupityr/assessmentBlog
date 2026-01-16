@@ -1,6 +1,7 @@
 import { useAppDispatch,useAppSelector } from '@/app/store'
 import { fetchPosts } from '@/features/postsSlice'
 import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 const Blogcard = () => {
     const dispatch = useAppDispatch();
@@ -15,9 +16,14 @@ const Blogcard = () => {
             <div>
                 {blogs.posts.map(blog => (
                     <div key={blog.id}>
-                        <h3>
+                        <Link to={`/post/${blog.post_id}`}>
+                            <h3>
+                                {blog.title}
+                            </h3>
+                        </Link>
+                        {/* <h3>
                             {blog.title}
-                        </h3>
+                        </h3> */}
                     </div>
                 ))}
             </div>
