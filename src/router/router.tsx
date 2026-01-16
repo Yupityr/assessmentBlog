@@ -2,7 +2,7 @@ import {createBrowserRouter} from "react-router-dom";
 import Signup from "../pages/auth/Singup";
 import Signin from "../pages/auth/Signin";
 import Homepage from "../pages/Homepage";
-import { Createpost } from "@/pages/Createpost";
+import Createpost from "@/pages/Createpost";
 import Layout from "@/pages/Layout";
 import Authprotectedroute from "./Authprotectedroute";
 import Landingpage from "@/pages/Landingpage";
