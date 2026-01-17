@@ -53,7 +53,7 @@ const postSlice = createSlice({
             state.posts = action.payload;
         })
         .addCase(fetchPosts.fulfilled, (state,action) => {
-            state.posts = action.payload.posts;
+            state.posts = action.payload.posts ?? [];
             state.pagination.totalItems = action.payload.total
             state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
 

@@ -2,7 +2,7 @@
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import { Editor } from "@tiptap/react"
 import { useState } from "react"
-// import { supabase } from '@/services/supabaseClient'
+import { useNavigate } from "react-router-dom"
 
 // imports for accessing store
 import { useAppDispatch } from '@/app/store'
@@ -14,6 +14,8 @@ const Createpost = () => {
 
     const [title, setTitle] = useState('')
     const [body,setBody] = useState<Editor | null>(null)
+    const [status,setStatus] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = async () => {
         await dispatch(
@@ -21,6 +23,11 @@ const Createpost = () => {
                 title,body:body?.getJSON()
             })
         )
+        setStatus('Post created successfully!')
+        setTimeout(() => {
+            setStatus('')
+            navigate('/home')
+        }, 1000);
     }
 
 
@@ -36,6 +43,7 @@ const Createpost = () => {
                     </button>
                 </div>
                 <SimpleEditor onEditorReady={setBody} />
+                {status && <p className="text-center text-green-500">{status}</p>}
             </div>
         </>
     );

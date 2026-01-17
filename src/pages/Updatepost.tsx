@@ -9,11 +9,12 @@ import { updatePost } from "@/features/postsSlice";
 import { Editor } from "@tiptap/react"
 import {Editonlyeditor} from "@/components/tiptap-templates/simple/Editonlyeditor";
 import { fetchPosts } from "@/features/postsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Updatepost = () => {
     const dispatch = useAppDispatch()
     const params = useParams()
-
+    const navigate = useNavigate()
     const blogs = useAppSelector((state) => state.posts.posts.find(p => p.post_id === params.postId))
 
     const initialTitle = blogs?.title
@@ -26,7 +27,9 @@ const Updatepost = () => {
     },[dispatch])    
 
     const saveEdit = () =>{
-        
+        setTimeout(() => {
+            navigate(`/post/user/${blogs?.user_id}`)
+        }, 1000);
         return dispatch(updatePost({
             post_id:params.postId,
             title:title,
