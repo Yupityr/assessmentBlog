@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from "@/app/store";
 import { useEffect } from "react";
-import { deletePost, fetchPosts, setPage } from "@/features/postsSlice";
+import { deletePost, setPage,fetchPostsByUserId } from "@/features/postsSlice";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +12,7 @@ const Userposts = () => {
     
     const dispatch = useAppDispatch()
     const params = useParams()
-
-    const blogs = useAppSelector((state) => state.posts.posts.filter(p => p.user_id === params.userId))
+    const blogs = useAppSelector((state) => state.posts.posts)
     
     const navigate = useNavigate()
 
@@ -25,12 +24,11 @@ const Userposts = () => {
     )
 
     useEffect(() => {
-        dispatch(fetchPosts())
-    },[currentPage, dispatch, totalPages])
-
-
-
-    
+        const userId = params.userId;
+        if (userId){
+            dispatch(fetchPostsByUserId(userId))
+        }
+    },[currentPage, dispatch, totalPages, params.userId])
 
     return (
         <>

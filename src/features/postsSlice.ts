@@ -59,6 +59,13 @@ const postSlice = createSlice({
 
             // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
         })
+        .addCase(fetchPostsByUserId.fulfilled, (state,action) => {
+            state.posts = action.payload.posts ?? [];
+            state.pagination.totalItems = action.payload.total
+            state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
+
+            // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
+        })
         .addCase(updatePost.fulfilled, (state, action) => {
             const index = state.posts.findIndex(
                 post => post.post_id === action.payload.post_id
@@ -76,33 +83,71 @@ const postSlice = createSlice({
 });
 
 
-export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationType,total:number,user_id:string},void, {state:RootState}>('posts/fetchPosts',
-    async (_, {getState}) => {
-        try {
-            const { currentPage, postPerPage} = getState().posts.pagination;
+export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationType,total:number,user_id:string},string, {state:RootState}>('posts/fetchPosts',
+    async (userId, {getState}) => {
+        const { currentPage, postPerPage} = getState().posts.pagination;
 
-            const from = (currentPage - 1) * postPerPage
-            const to = from + postPerPage - 1
-            
-            const {data, count} = await supabase.from('blogs').select('*',{count: "exact"}).range(from,to).order('created_at', {ascending:false});
+        const from = (currentPage - 1) * postPerPage
+        const to = from + postPerPage - 1
+        
+        const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).range(from,to).order('created_at', {ascending:false});
 
-            return {posts:data,total:count}
-        } catch (error:any){
-            return error
+        if (error) {
+            throw new Error(error.message);
+        }
+        if (!data) {
+            throw new Error('No data found');
+        }
+        return {
+        posts: data,
+        pagination: getState().posts.pagination,
+        total: count ?? 0,
+        user_id: userId
         }
     }
 )
 
+export const fetchPostsByUserId = createAsyncThunk<{posts:Post[]; pagination:paginationType,total:number,user_id:string},string , {state:RootState,rejectValue: string}>('posts/fetchPostsByUserId',
+    async (userId, {getState, rejectWithValue}) => {
+        const { currentPage, postPerPage} = getState().posts.pagination;
+
+        const from = (currentPage - 1) * postPerPage
+        const to = from + postPerPage - 1
+        
+        const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).eq('user_id', userId).range(from,to).order('created_at', {ascending:false});
+
+        if (error) {
+            return rejectWithValue(error.message)
+        }
+
+        if (!data) {
+            return rejectWithValue('No data found')
+        }
+
+        return {
+        posts: data,
+        pagination: getState().posts.pagination,
+        total: count ?? 0,
+        user_id: userId ?? ''
+        };
+    }
+)
+
+
 export const createPost = createAsyncThunk('posts/createPosts',
     async (newPost: {title: string; body:any; }) => {
-        try {
-           
-            const {data} = await supabase.from('blogs').insert([newPost]);
-            return data;
-            
-        } catch (error:any){
-            return error
+        const {data, error} = await supabase.from('blogs').insert([newPost]);
+
+        if (error) {
+            throw new Error(error.message);
         }
+
+        if (!data) {
+            throw new Error('No data returned from the insert operation.');
+        }
+
+        return data;
+        
     }
 )
 
