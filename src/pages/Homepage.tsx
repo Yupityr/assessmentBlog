@@ -15,7 +15,7 @@ const Homepage = () => {
       await supabase.auth.signOut();
       navigate("/")
     } catch (error){
-      return 
+      return error
     }
   }
 

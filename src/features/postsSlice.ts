@@ -30,13 +30,17 @@ interface PostsState{
     total:number;
     currentPost: Post| null;
     pagination:paginationType;
+    error:string | null;
+    loading?:boolean;
 }
 
 const initialState:PostsState = {
     posts:[],
     total:0,
     currentPost:null,
-    pagination:initialPaginationState
+    pagination:initialPaginationState,
+    error:null,
+    loading:false
 }
 
 const postSlice = createSlice({
@@ -50,22 +54,39 @@ const postSlice = createSlice({
     extraReducers:(builder) => {
         builder
         .addCase(createPost.fulfilled, (state,action) => {
-            state.posts = action.payload;
+            state.posts.push(action.payload)
+        })
+        // fetching all posts
+        .addCase(fetchPosts.pending, (state) => {
+            state.loading = true;
+            state.error = null;
         })
         .addCase(fetchPosts.fulfilled, (state,action) => {
+            state.loading = false;
             state.posts = action.payload.posts ?? [];
             state.pagination.totalItems = action.payload.total
             state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
-
-            // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
+        })
+        .addCase(fetchPosts.rejected, (state,action) => {
+            state.loading = false;
+            state.error = action.payload as string || "Something went wrong";
+        })
+        // fetching posts by user id
+        .addCase(fetchPostsByUserId.pending, (state) => {
+            state.loading = true;
+            state.error = null;
         })
         .addCase(fetchPostsByUserId.fulfilled, (state,action) => {
+            state.loading = false;
             state.posts = action.payload.posts ?? [];
             state.pagination.totalItems = action.payload.total
             state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.postPerPage)
-
-            // state.pagination.totalPages = Math.ceil(action.payload.pagination.totalItems / action.payload.pagination.postPerPage);
         })
+        .addCase(fetchPostsByUserId.rejected, (state,action) => {
+            state.loading = false;
+            state.error = action.payload as string || "Something went wrong";
+        })
+        // updating a post
         .addCase(updatePost.fulfilled, (state, action) => {
             const index = state.posts.findIndex(
                 post => post.post_id === action.payload.post_id
@@ -83,8 +104,8 @@ const postSlice = createSlice({
 });
 
 
-export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationType,total:number,user_id:string},string, {state:RootState}>('posts/fetchPosts',
-    async (userId, {getState}) => {
+export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationType,total:number,user_id:string},void, {state:RootState,rejectValue: string}>('posts/fetchPosts',
+    async (userId, {getState, rejectWithValue}) => {
         const { currentPage, postPerPage} = getState().posts.pagination;
 
         const from = (currentPage - 1) * postPerPage
@@ -93,7 +114,7 @@ export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationT
         const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).range(from,to).order('created_at', {ascending:false});
 
         if (error) {
-            throw new Error(error.message);
+            return rejectWithValue(error.message)
         }
         if (!data) {
             throw new Error('No data found');
@@ -102,7 +123,7 @@ export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationT
         posts: data,
         pagination: getState().posts.pagination,
         total: count ?? 0,
-        user_id: userId
+        user_id: userId ?? ''
         }
     }
 )
@@ -134,12 +155,12 @@ export const fetchPostsByUserId = createAsyncThunk<{posts:Post[]; pagination:pag
 )
 
 
-export const createPost = createAsyncThunk('posts/createPosts',
-    async (newPost: {title: string; body:any; }) => {
+export const createPost = createAsyncThunk<Post, {title: string; body:any; }, {rejectValue: string}>('posts/createPosts',
+    async (newPost: {title: string; body:any; }, {rejectWithValue}) => {
         const {data, error} = await supabase.from('blogs').insert([newPost]);
 
         if (error) {
-            throw new Error(error.message);
+            return rejectWithValue(error.message);
         }
 
         if (!data) {

@@ -12,7 +12,7 @@ const Userposts = () => {
     
     const dispatch = useAppDispatch()
     const params = useParams()
-    const blogs = useAppSelector((state) => state.posts.posts)
+    const {posts, loading, error} = useAppSelector((state) => state.posts)
     
     const navigate = useNavigate()
 
@@ -27,13 +27,16 @@ const Userposts = () => {
         const userId = params.userId;
         if (userId){
             dispatch(fetchPostsByUserId(userId))
+            console.log(userId);
         }
-    },[currentPage, dispatch, totalPages, params.userId])
+    },[dispatch, params.userId])
 
     return (
         <>
             <div className="flex flex-col">
-                {blogs.map(blog => (
+                {loading && <p>Loading...</p> }
+                {error && <p className="text-red-500">{error}</p>}
+                {!loading && !error && posts.map(blog => (
                     <div className='flex flex-row bg-white border border-gray-200 rounded-lg p-6 shadow-sm' key={blog.id}>
                         <div className='flex flex-row justify-between'>
                             <div className="flex items-center">
@@ -59,7 +62,7 @@ const Userposts = () => {
                         Prev
                     </button>
                     <p className='content-center mx-4'>{currentPage} of {totalPages}</p>
-                    <button onClick={() => dispatch(setPage(currentPage + 1))}>
+                    <button disabled={currentPage === totalPages} onClick={() => dispatch(setPage(currentPage + 1))}>
                          Next
                     </button>
                 </div>
