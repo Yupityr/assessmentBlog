@@ -4,7 +4,7 @@ Hermod is a modern blog web application built with React + TypeScript. It featur
 
 ## Live Demo
 
-[@Hermod on Netlify]((hermod.netlify.app))
+[@Hermod on Netlify](https://hermod.netlify.app)
 
 ## Features
 
