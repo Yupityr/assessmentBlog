@@ -9,6 +9,7 @@ export interface Post{
     body:any;
     post_id:string
     user_id:string
+    status:string
 }
 
 export interface paginationType{
@@ -129,7 +130,7 @@ export const fetchPosts = createAsyncThunk<{posts:Post[]; pagination:paginationT
         const from = (currentPage - 1) * postPerPage
         const to = from + postPerPage - 1
         
-        const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).range(from,to).order('created_at', {ascending:false});
+        const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).eq('status', 'published').range(from,to).order('created_at', {ascending:false});
 
         if (error) {
             return rejectWithValue(error.message)
@@ -173,26 +174,9 @@ export const fetchPostsByUserId = createAsyncThunk<{userPosts:Post[]; pagination
 )
 
 
-export const createPost = createAsyncThunk<Post, {title: string; body:any; }, {rejectValue: string}>('posts/createPosts',
-    async (newPost: {title: string; body:any; }, {rejectWithValue}) => {
+export const createPost = createAsyncThunk<Post, {title: string; body:any; status: string}, {rejectValue: string}>('posts/createPosts',
+    async (newPost: {title: string; body:any; status: string}, {rejectWithValue}) => {
         const {data, error} = await supabase.from('blogs').insert([newPost]);
-
-        if (error) {
-            return rejectWithValue(error.message);
-        }
-
-        if (!data) {
-            throw new Error('No data returned from the insert operation.');
-        }
-
-        return data;
-        
-    }
-)
-
-export const saveDraft = createAsyncThunk<Post, {title: string; body:any; }, {rejectValue: string}>('posts/saveDraft',
-    async (newPost: {title: string; body:any; }, {rejectWithValue}) => {
-        const {data, error} = await supabase.from('drafts').insert([newPost]);
 
         if (error) {
             return rejectWithValue(error.message);
@@ -224,22 +208,22 @@ export const updatePost = createAsyncThunk<Post,{ post_id: string | undefined; t
   }
 )
 //to be added
-export const updateDraft = createAsyncThunk<Post,{ post_id: string | undefined; title: string | undefined; body: any}>('posts/updateDraft',
-    async ({ post_id, title, body }, { rejectWithValue }) => {
-    const { data, error } = await supabase
-      .from('drafts')
-      .update({ title, body })
-      .eq('post_id', post_id)
-      .select()
-      .single()
+// export const updateDraft = createAsyncThunk<Post,{ post_id: string | undefined; title: string | undefined; body: any}>('posts/updateDraft',
+//     async ({ post_id, title, body }, { rejectWithValue }) => {
+//     const { data, error } = await supabase
+//       .from('drafts')
+//       .update({ title, body })
+//       .eq('post_id', post_id)
+//       .select()
+//       .single()
 
-    if (error) {
-      return rejectWithValue(error.message)
-    }
+//     if (error) {
+//       return rejectWithValue(error.message)
+//     }
 
-    return data
-  }
-)
+//     return data
+//   }
+// )
 
 export const deletePost = createAsyncThunk<string, string>('posts/deletePost',
     async(post_id, {rejectWithValue}) => {
