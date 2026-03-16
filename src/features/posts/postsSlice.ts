@@ -187,11 +187,11 @@ export const createPost = createAsyncThunk<Post, {title: string; body:any; statu
     }
 )
 
-export const updatePost = createAsyncThunk<Post,{ post_id: string | undefined; title: string | undefined; body: any}>('posts/updatePost',
-    async ({ post_id, title, body }, { rejectWithValue }) => {
+export const updatePost = createAsyncThunk<Post,{ post_id: string | undefined; title: string | undefined; body: any; status: string}>('posts/updatePost',
+    async ({ post_id, title, body, status }, { rejectWithValue }) => {
     const { data, error } = await supabase
       .from('blogs')
-      .update({ title, body })
+      .update({ title, body, status })
       .eq('post_id', post_id)
       .select()
       .single()

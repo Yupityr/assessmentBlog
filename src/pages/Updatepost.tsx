@@ -10,6 +10,7 @@ import { Editor } from "@tiptap/react"
 import {Editonlyeditor} from "@/components/tiptap-templates/simple/Editonlyeditor";
 import { fetchPosts } from "@/features/posts/postsSlice";
 import { useNavigate } from "react-router-dom";
+import Createpostheader from "@/components/common/Createpostheader";
 
 const Updatepost = () => {
     const dispatch = useAppDispatch()
@@ -26,25 +27,24 @@ const Updatepost = () => {
         dispatch(fetchPosts())
     },[dispatch])    
 
-    const saveEdit = () =>{
+    const saveEdit = (status: 'published' | 'draft') =>{
         setTimeout(() => {
             navigate(`/post/user/${blogs?.user_id}`)
         }, 1000);
         return dispatch(updatePost({
             post_id:params.postId,
             title:title,
-            body:body?.getJSON()
+            body:body?.getJSON(),
+            status
         }))
     }
 
 
     return (
         <>
+        <Createpostheader onPost={saveEdit} disabled={!title}/>
         <div className="flex justify-between my-2 mx-4 ">
             <input id="title" value={title} className="text-3xl" type="text" onChange={(e) => setTitle(e.target.value)}/>
-            <button onClick={saveEdit}>
-                Save
-            </button>
         </div>
             <article>
                 

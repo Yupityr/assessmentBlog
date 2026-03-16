@@ -33,10 +33,6 @@ export const router = createBrowserRouter([
                         path: "/post/:postId", 
                         element: <Viewpost/>
                     },
-                    {
-                        path:"/post/edit/:postId",
-                        element: <Updatepost/>
-                    }
                 ]
             },
             
@@ -48,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: "/create-blog", 
                 element: <Createpost/>
+            },
+            {
+                path:"/post/edit/:postId",
+                element: <Updatepost/>
             }
         ]
 
