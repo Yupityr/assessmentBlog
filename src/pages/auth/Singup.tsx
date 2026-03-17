@@ -39,7 +39,7 @@ const SignUpPage = () => {
         <div className="flex flex-col py-4">
           <input
             onChange={handleInputChange}
-            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             type="email"
             name="email"
             id="email"
@@ -49,7 +49,7 @@ const SignUpPage = () => {
         <div className="flex flex-col py-4 ">
           <input
             onChange={handleInputChange}
-            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             type="password"
             name="password"
             id="password"

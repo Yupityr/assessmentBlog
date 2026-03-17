@@ -40,7 +40,7 @@ const Userposts = () => {
 
     return (
         <>
-            <div className="flex flex-col min-h-[75vh] max-w-lg mx-auto">
+            <div className="flex flex-col min-h-[75vh] max-w-2xl mx-auto">
                 <div className="text-center my-4 font-bold">
                     <h1>Your Posts</h1>
                 </div>

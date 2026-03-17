@@ -1,6 +1,6 @@
 import { supabase } from "@/services/supabaseClient";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ProfileDropdown = ({session}: any) => {
     const [open, setOpen] = useState(false);
@@ -32,32 +32,27 @@ const ProfileDropdown = ({session}: any) => {
             </div>
         {open && 
             <div className="relative">
-                <div className="dropdown absolute right-0 mt-2 w-52 overflow-hidden rounded-xl border">
+                <div className="shadow-2xl dropdown absolute right-0 mt-2 w-52 overflow-hidden rounded-xl">
                 
-                    {/* User info (optional) */}
                     <div className="px-4 py-3">
-                        <p className="text-sm font-semibold">sample</p>
-                        <p className="text-xs text-gray-500">{session?.user.email || "None"}</p>
+                        <p className="text-sm font-semibold text-gray-600">sample</p>
+                        <p className="text-xs  text-gray-600">{session?.user.email || "None"}</p>
                     </div>
 
-                    <div className="h-px bg-gray-200" />
-
-                {/* Menu Items */}
                     <div className="py-2">
-                        <Link to={`/user/${session?.user.id}`} onClick={toggleDropdown} className="block px-4 py-2 text-sm text-gray-700 " >
-                        Profile
-                        </Link>
-                        {/* <a
-                        href="/settings"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        <div 
+                        className="w-full text-left px-4 py-2 text-sm   cursor-pointer hover:text-gray-900 text-gray-600"
+                        onClick={() => {
+                            toggleDropdown();
+                            navigate(`/user/${session?.user.id}`);
+                        }}
                         >
-                        Settings
-                        </a> */}
+                        Profile
+                        </div>
 
-                        <div className="h-px bg-gray-200 my-2" />
 
                         <div 
-                        className="w-full text-left px-4 py-2 text-sm text-red-600  cursor-pointer hover:text-blue-700"
+                        className="w-full text-left px-4 py-2 text-sm   cursor-pointer hover:text-gray-900 text-gray-600"
                         onClick={signOutUser}
                         >
                         Sign out
