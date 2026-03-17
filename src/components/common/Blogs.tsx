@@ -6,7 +6,6 @@ type BlogsProps = Pick<PostsState, 'posts' | 'loading' | 'error'>;
 import { useAppDispatch } from "@/app/store";
 import { useParams } from "react-router-dom";
 import Loader from './Loader';
-import { Earth } from 'lucide-react';
 
 const Blogs = ({posts, loading, error}: BlogsProps) => {
 
@@ -21,16 +20,19 @@ const Blogs = ({posts, loading, error}: BlogsProps) => {
             {posts.length === 0 && !loading && !error && <p className="text-center">No posts found.</p>}
             {error && <div className="text-center text-red-500"> <p>Eror Occurred</p> <p>Redirecting back to homepage</p></div>}
             {!loading && !error && 
-            <div className='flex flex-col w-full divide-y divide-stone-100'>
+            <div className='flex flex-col w-full'>
                 {posts?.map(blog => (
-                    <div className='group flex flex-row border border-gray-200 rounded-lg p-6 shadow-sm my-3 ease-in-out hover:scale-[1.05]' key={blog.post_id}>
+                    <div onClick={() =>navigate(`/post/${blog.post_id}`)} className='group flex flex-row p-6 shadow-sm my-3 ease-in-out hover:scale-[1.05] cursor-pointer' key={blog.post_id}>
                         <div className='flex flex-row gap-4 w-full'>
                             <div className="flex flex-col ">
-                                <Link className='nav-link hover:text-blue-500' to={`/post/${blog.post_id}`}>
+                                {/* <Link className='nav-link hover:text-blue-500' to={`/post/${blog.post_id}`}> */}
                                     <h3 className='text-xl md:text-lg'>
                                         {blog.title}
                                     </h3>
-                                </Link>
+                                    <span>
+                                        {new Date(blog.created_at).toLocaleString()}
+                                    </span>
+                                {/* </Link> */}
                             </div>
                         </div>
                         {params.userId === blog.user_id && 

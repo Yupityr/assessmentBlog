@@ -7,9 +7,10 @@ export interface Post{
     id:number,
     title:string;
     body:any;
-    post_id:string
-    user_id:string
-    status:string
+    post_id:string;
+    user_id:string;
+    status:string;
+    created_at: string;
 }
 
 export interface paginationType{
