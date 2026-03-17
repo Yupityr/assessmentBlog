@@ -32,11 +32,11 @@ const ProfileDropdown = ({session}: any) => {
             </div>
         {open && 
             <div className="relative">
-                    <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
-                    
+                <div className="dropdown absolute right-0 mt-2 w-52 overflow-hidden rounded-xl border">
+                
                     {/* User info (optional) */}
                     <div className="px-4 py-3">
-                        <p className="text-sm font-semibold text-gray-900">sample</p>
+                        <p className="text-sm font-semibold">sample</p>
                         <p className="text-xs text-gray-500">{session?.user.email || "None"}</p>
                     </div>
 
@@ -44,7 +44,7 @@ const ProfileDropdown = ({session}: any) => {
 
                 {/* Menu Items */}
                     <div className="py-2">
-                        <Link to={`/user/${session?.user.id}`} onClick={toggleDropdown} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" >
+                        <Link to={`/user/${session?.user.id}`} onClick={toggleDropdown} className="block px-4 py-2 text-sm text-gray-700 " >
                         Profile
                         </Link>
                         {/* <a
@@ -56,12 +56,12 @@ const ProfileDropdown = ({session}: any) => {
 
                         <div className="h-px bg-gray-200 my-2" />
 
-                        <button
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                        <div 
+                        className="w-full text-left px-4 py-2 text-sm text-red-600  cursor-pointer hover:text-blue-700"
                         onClick={signOutUser}
                         >
                         Sign out
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>}

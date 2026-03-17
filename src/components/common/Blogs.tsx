@@ -6,6 +6,7 @@ type BlogsProps = Pick<PostsState, 'posts' | 'loading' | 'error'>;
 import { useAppDispatch } from "@/app/store";
 import { useParams } from "react-router-dom";
 import Loader from './Loader';
+import { Earth } from 'lucide-react';
 
 const Blogs = ({posts, loading, error}: BlogsProps) => {
 
