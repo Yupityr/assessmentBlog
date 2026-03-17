@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import type { PostsState } from '@/features/posts/postsSlice';
 import { useNavigate } from 'react-router-dom';
 import { deletePost } from "@/features/posts/postsSlice";
@@ -25,14 +24,12 @@ const Blogs = ({posts, loading, error}: BlogsProps) => {
                     <div onClick={() =>navigate(`/post/${blog.post_id}`)} className='group flex flex-row p-6 shadow-sm my-3 ease-in-out hover:scale-[1.05] cursor-pointer' key={blog.post_id}>
                         <div className='flex flex-row gap-4 w-full'>
                             <div className="flex flex-col ">
-                                {/* <Link className='nav-link hover:text-blue-500' to={`/post/${blog.post_id}`}> */}
-                                    <h3 className='text-xl md:text-lg'>
-                                        {blog.title}
-                                    </h3>
-                                    <span>
-                                        {new Date(blog.created_at).toLocaleString()}
-                                    </span>
-                                {/* </Link> */}
+                                <h3 className='text-xl md:text-lg'>
+                                    {blog.title}
+                                </h3>
+                                <span>
+                                    {new Date(blog.created_at).toLocaleString()}
+                                </span>
                             </div>
                         </div>
                         {params.userId === blog.user_id && 
