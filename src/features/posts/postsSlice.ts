@@ -90,6 +90,10 @@ const postSlice = createSlice({
             state.loading = false;
             state.error = action.payload as string || "Something went wrong";
         })
+        // fetch single post
+        .addCase(fetchPostsById.fulfilled, (state,action) => { 
+            state.posts = action.payload.posts ?? []
+        })
         // updating a post
         .addCase(updatePost.fulfilled, (state, action) => {
             const index = state.posts.findIndex(
@@ -165,6 +169,26 @@ export const fetchPostsByUserId = createAsyncThunk<{userPosts:Post[]; pagination
         pagination: getState().posts.pagination,
         total: count ?? 0,
         user_id: userId ?? ''
+        };
+    }
+)
+
+export const fetchPostsById = createAsyncThunk<{posts:Post[];post_id:string},string , {rejectValue: string}>('posts/fetchPostsById',
+    async (postId, {rejectWithValue}) => {
+        
+        const {data, error} = await supabase.from('blogs').select('*').eq('post_id', postId);
+
+        if (error) {
+            return rejectWithValue(error.message)
+        }
+
+        if (!data) {
+            return rejectWithValue('No data found')
+        }
+
+        return {
+        posts: data,
+        post_id: postId ?? ''
         };
     }
 )

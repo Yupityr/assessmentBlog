@@ -8,7 +8,7 @@ import { updatePost } from "@/features/posts/postsSlice";
 // import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Editor } from "@tiptap/react"
 import {Editonlyeditor} from "@/components/tiptap-templates/simple/Editonlyeditor";
-import { fetchPosts } from "@/features/posts/postsSlice";
+import { fetchPostsById } from "@/features/posts/postsSlice";
 import { useNavigate } from "react-router-dom";
 import Createpostheader from "@/components/common/Createpostheader";
 
@@ -24,8 +24,11 @@ const Updatepost = () => {
     const [body,setBody] = useState<Editor | null>(null)
 
     useEffect(() => {
-        dispatch(fetchPosts())
-    },[dispatch])    
+        const postId = params.postId
+        if (postId){
+            dispatch(fetchPostsById(postId))
+        }
+    },[dispatch, params.postId])    
 
     const saveEdit = (status: 'published' | 'draft') =>{
         setTimeout(() => {
