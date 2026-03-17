@@ -29,7 +29,9 @@ const Viewpost = () => {
                     {blogs?.title}
                 </p>
             </div>
+            {blogs?.body && 
             <Readonlyeditor postContent={blogs?.body}/>
+            }
         </article>
         </>
     );
