@@ -6,7 +6,7 @@ const Landingpage = () => {
     const {session} = useSession();
     if (session) return <Navigate to={'/home'} />
     return (
-        <>
+        <div className="flex flex-col justify-center min-h-[60vh]">
             <h1 className="text-3xl font-bold text-center">Welcome to Hermod</h1>
             <p className="text-center mt-4">Your personal blog platform</p>
             <Link to="/signin">
@@ -14,7 +14,7 @@ const Landingpage = () => {
                     Get Started
                 </button>
             </Link>
-        </>
+        </div>
     );
 };
 

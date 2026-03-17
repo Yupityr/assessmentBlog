@@ -34,7 +34,7 @@ const SignUpPage = () => {
 
   return (
     <div>
-      <form onSubmit={handleSignUp} className="max-w-md m-auto pt-24">
+      <form onSubmit={handleSignUp} className="flex flex-col min-h-[70vh] justify-center  max-w-md m-auto">
         <h2 className="text-center font-bold pb-2">Sign up for Hermod</h2>
         <div className="flex flex-col py-4">
           <input
