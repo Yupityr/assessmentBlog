@@ -28,7 +28,7 @@ const Blogs = ({posts, loading, error}: BlogsProps) => {
                                     <h3 className='text-xl md:text-lg'>
                                         {blog.title}
                                     </h3>
-                                    <span>
+                                    <span className='text-xs'>
                                         {new Date(blog.created_at).toLocaleString()}
                                     </span>
                                     

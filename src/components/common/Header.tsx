@@ -5,7 +5,7 @@ import { useSession } from "@/context/AuthContext";
 const Header = () => {
   const {session} = useSession();
   return (
-    <header className="shadow-md flex flex-row justify-between py-4 mb-8">
+    <header className="header shadow-md flex flex-row justify-between py-4 mb-8">
       <div className=" flex flex-row items-center">
         
         <p className="mx-2 my-auto text-xl">
