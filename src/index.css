@@ -48,7 +48,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #3E2A1F;
-    background-color: #eeebe7;
+    background-color: #f8f5f1;
   }
   a:hover {
     color: #55588f;
@@ -70,6 +70,9 @@ button:focus-visible {
   }
   .dropdown{
     background-color: #d6d5d1;
+  }
+  .header{
+    background-color: rgb(255, 255, 255);
   }
 }
 @media (prefers-color-scheme: dark) {
