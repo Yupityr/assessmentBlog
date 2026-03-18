@@ -16,10 +16,11 @@ const Blogs = ({posts, loading, error}: BlogsProps) => {
     return (
         <>
             {loading && <Loader /> }
-            {posts.length === 0 && !loading && !error && <p className="text-center">No posts found.</p>}
+            
             {error && <div className="text-center text-red-500"> <p>Eror Occurred</p> <p>Redirecting back to homepage</p></div>}
             {!loading && !error && 
             <div className='flex flex-col w-full'>
+                {posts.length === 0 && !loading && !error && <span className="flex justify-center items-center min-h-[60vh]">No posts found.</span>}
                 {posts?.map(blog => (
                     <>
                         <div onClick={() =>navigate(`/post/${blog.post_id}`)} className='group flex flex-row p-6 my-3 ease-in-out hover:scale-[1.01] cursor-pointer' key={blog.post_id}>

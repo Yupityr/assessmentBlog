@@ -1,25 +1,35 @@
 import { supabase } from "@/services/supabaseClient";
-import { useState } from "react";
+import { useState,useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProfileDropdown = ({session}: any) => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();   
     const toggleDropdown = () => {
         setOpen(!open);
     }
     const signOutUser = async (e:any) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    try{
-      await supabase.auth.signOut();
-      navigate("/")
-    } catch (error){
-      return error
+        try{
+        await supabase.auth.signOut();
+        navigate("/")
+        } catch (error){
+        return error
+        }
     }
-  }
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+            setOpen(false);
+        }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
     return (
-        <div>
+        <div ref={dropdownRef}>
             <div
             onClick={toggleDropdown}
             className="flex items-center space-x-2 rounded-full p-1 hover:bg-gray-300 focus:outline-none"

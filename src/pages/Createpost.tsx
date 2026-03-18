@@ -33,8 +33,10 @@ const Createpost = () => {
 
     return (
         <>
-            <CreatePostHeader onPost={handlePost} disabled={!title}/>
-            <div className="flex justify-between my-2 mx-4 gap-5">
+            <header>
+                <CreatePostHeader onPost={handlePost} disabled={!title}/>
+            </header>
+            <div className="flex max-w-2xl my-2 mx-4 gap-5">
                 <input id="title" className="text-3xl w-full" type="text" placeholder="Insert Title" onChange={(e) => setTitle(e.target.value)}/>
             </div>
             <SimpleEditor onEditorReady={setBody} />
@@ -42,7 +44,6 @@ const Createpost = () => {
                 (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
                     <div>
                         <Loader />
-                        Uploading Post...
                     </div>
                 </div>
             )}
