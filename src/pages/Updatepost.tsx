@@ -17,10 +17,8 @@ const Updatepost = () => {
     const params = useParams()
     const navigate = useNavigate()
     const blogs = useAppSelector((state) => state.posts.posts.find(p => p.post_id === params.postId))
-
-    const initialTitle = blogs?.title
     
-    const [title, setTitle] = useState(initialTitle)
+    const [title, setTitle] = useState("")
     const [body,setBody] = useState<Editor | null>(null)
 
     useEffect(() => {
@@ -32,7 +30,7 @@ const Updatepost = () => {
 
     const saveEdit = (status: 'published' | 'draft') =>{
         setTimeout(() => {
-            navigate(`/post/user/${blogs?.user_id}`)
+            navigate(`/user/${blogs?.user_id}`)
         }, 1000);
         return dispatch(updatePost({
             post_id:params.postId,
@@ -42,16 +40,25 @@ const Updatepost = () => {
         }))
     }
 
+    useEffect(() => {
+    if (blogs?.title) {
+        setTitle(blogs.title);
+        console.log("test");
+        
+    }
+    }, [blogs]);
+    
+
 
     return (
         <>
-        <Createpostheader onPost={saveEdit} disabled={!title}/>
-        <div className="flex justify-between my-2 mx-4 ">
-            <input id="title" value={title} className="text-3xl" type="text" onChange={(e) => setTitle(e.target.value)}/>
-        </div>
+            <Createpostheader onPost={saveEdit} disabled={!title}/>
+            <div className="flex justify-between my-2 mx-4 ">
+                <input id="title" value={title ?? ""} className="text-3xl" type="text" onChange={(e) => setTitle(e.target.value)}/>
+            </div>
             <article>
-                
-                <Editonlyeditor onEditorReady={setBody} postContent={blogs?.body}/>
+                {blogs?.body &&
+                <Editonlyeditor onEditorReady={setBody} postContent={blogs?.body}/>}
             </article>
         </>
     );
