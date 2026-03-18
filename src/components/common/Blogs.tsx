@@ -36,10 +36,15 @@ const Blogs = ({posts, loading, error}: BlogsProps) => {
                             </div>
                             {params.userId === blog.user_id && 
                             <div className="flex items-center space-x-4">
-                                <button onClick={() =>navigate(`/post/edit/${blog.post_id}`)}>
+                                <button onClick={(e) =>{
+                                    navigate(`/post/edit/${blog.post_id}`);
+                                    e.stopPropagation()}}>
                                     Edit
                                 </button>
-                                <button onClick={() => dispatch(deletePost(blog.post_id))}>
+                                <button onClick={(e) => {
+                                    dispatch(deletePost(blog.post_id));
+                                    e.stopPropagation()
+                                }}>
                                     Delete
                                 </button>
                             </div>}

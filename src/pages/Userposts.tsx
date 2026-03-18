@@ -41,7 +41,7 @@ const Userposts = () => {
     return (
         <>
             <div className="flex flex-col min-h-[75vh] max-w-2xl mx-auto">
-                <div className="text-center my-4 font-bold">
+                <div className="items-start text-xs my-4 font-bold px-5">
                     <h1>Your Posts</h1>
                 </div>
                 <Blogs posts={userPosts} loading={loading} error={error} />
