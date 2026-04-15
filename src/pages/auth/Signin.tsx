@@ -1,16 +1,32 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useSession } from "@/context/AuthContext";
 import { supabase } from "@/services/supabaseClient";
+import { useSession } from "@/context/AuthContext";
+import { Eye, EyeClosed } from 'lucide-react';
 
-const Signin = () => {
+// ── sub-components ────────────────────────────────────────────────────────────
+
+const EyeIcon = ({ open }: { open: boolean }) =>
+    open ? (
+      <EyeClosed size={16} />
+    ) : (
+      <Eye size={16}/>
+    );
+
+// ── page ──────────────────────────────────────────────────────────────────────
+
+const SignInPage = () => {
   const { session } = useSession();
-  if (session) return <Navigate to="/home" />;
+
   const [status, setStatus] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
+
+  // all hooks called above — safe to early-return now
+  if (session) return <Navigate to="/home" />;
 
   const isDisabled = !formValues.email || !formValues.password;
 
@@ -30,36 +46,89 @@ const Signin = () => {
     }
     setStatus("");
   };
+
   return (
-    <div>
-      <form onSubmit={handleSignin} className="flex flex-col min-h-[70vh] justify-center max-w-xs sm:max-w-md m-auto">
-        <h2 className="text-center font-bold pb-2">Sign in to Hermod</h2>
-        <div className="flex flex-col py-4">
-          <input
-            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border focus:border-transparent transition"
-            name="email"
-            onChange={handleInputChange}
-            type="email"
-            placeholder="Email"
-          />
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-md">
+
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Welcome back</h1>
+          <p className="text-sm text-gray-500 mt-1">Sign in to your Hermod account</p>
         </div>
-        <div className="flex flex-col py-4">
-          <input
-            className="p-3 mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border focus:border-transparent transition"
-            name="password"
-            onChange={handleInputChange}
-            type="password"
-            placeholder="Password"
-          />
+
+        {/* Card */}
+        <div className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm">
+          <form onSubmit={handleSignin} className="space-y-5">
+
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1.5">
+                Email address
+              </label>
+              <input
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="jane@example.com"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+                  Password
+                </label>
+                <Link to="/forgot-password" className="text-xs text-blue-600 hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
+              <div className="relative">
+                <input
+                  onChange={handleInputChange}
+                  className="w-full p-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                >
+                  <EyeIcon open={showPassword} />
+                </button>
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button
+              disabled={isDisabled}
+              type="submit"
+              className="w-full py-2.5 px-4 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            >
+              {status || "Sign in"}
+            </button>
+          </form>
         </div>
-        <button disabled={isDisabled} type="submit" className="w-full mt-4">Sign In</button>
-        <p className="text-center pt-4">
-          <Link to="/signup">Create new account</Link>
-        </p>
-        {status && <p className="text-center">{status}</p>}
-      </form>
+
+        {/* Footer links */}
+        <div className="text-center mt-5">
+          <p className="text-sm text-gray-500">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-blue-600 font-medium hover:underline">
+              Create one
+            </Link>
+          </p>
+        </div>
+
+      </div>
     </div>
   );
-}
+};
 
-export default Signin;
+export default SignInPage;
