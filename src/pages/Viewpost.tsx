@@ -29,9 +29,17 @@ const Viewpost = () => {
                     {blogs?.title}
                 </p>
             </div>
-            {blogs?.body && 
-            <Readonlyeditor postContent={blogs?.body}/>
-            }
+            <div className="min-h-full">
+                {blogs?.body && 
+                <Readonlyeditor postContent={blogs?.body}/>
+                }
+            </div>
+            {/* commment section */}
+            <div className="mx-auto p-auto">
+                <section className="text-[8px] sm:text-xs items-start font-bold sm:px-5">
+                    <h1 className=" header-text my-2">Comments</h1>
+                </section>
+            </div>
         </article>
         </>
     );
