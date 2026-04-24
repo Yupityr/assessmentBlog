@@ -1,19 +1,22 @@
 import { supabase } from "@/services/supabaseClient";
 import { useState,useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const ProfileDropdown = ({session}: any) => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [open, setOpen] = useState(false);
+    const [status, setStatus] = useState(false)
     const navigate = useNavigate();   
     const toggleDropdown = () => {
         setOpen(!open);
     }
     const signOutUser = async (e:any) => {
         e.preventDefault();
-
+        setStatus(true)
         try{
         await supabase.auth.signOut();
+        setStatus(false)
         navigate("/")
         } catch (error){
         return error
@@ -70,6 +73,13 @@ const ProfileDropdown = ({session}: any) => {
                     </div>
                 </div>
             </div>}
+            {status && 
+                (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+                    <div>
+                        <Loader />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
