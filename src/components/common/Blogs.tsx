@@ -11,14 +11,14 @@ import { useState } from 'react';
 const Blogs = ({posts, loading, error}: BlogsProps) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPostId, setSelectedPostId] = useState(null);
+    const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     
     const params = useParams()
 
-    const handleDeleteClick = (e, deleteId) => {
+    const handleDeleteClick = (e:React.MouseEvent<HTMLButtonElement>, deleteId:string | null) => {
         e.stopPropagation();
         setSelectedPostId(deleteId);
         setIsModalOpen(true);

@@ -246,8 +246,9 @@ export const updatePost = createAsyncThunk<Post,{ post_id: string | undefined; t
 //   }
 // )
 
-export const deletePost = createAsyncThunk<string, string>('posts/deletePost',
+export const deletePost = createAsyncThunk<string, string | null>('posts/deletePost',
     async(post_id, {rejectWithValue}) => {
+        if (!post_id) return rejectWithValue("Invalid post id");
         const {error} = await supabase
         .from('blogs')
         .delete()

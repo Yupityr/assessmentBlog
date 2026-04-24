@@ -1,4 +1,12 @@
-export default function Deletemodal({ isOpen, onClose, onConfirm, title, children }) {
+type DeleteModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  children?: React.ReactNode;
+};
+
+export default function Deletemodal({ isOpen, onClose, onConfirm, title, children } : DeleteModalProps) {
   if (!isOpen) return null;
 
   return (
