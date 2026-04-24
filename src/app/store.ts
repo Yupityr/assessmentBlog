@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { type TypedUseSelectorHook,useDispatch,useSelector } from 'react-redux'
 import postsReducer from '@/features/postsSlice'
+import commentReducer from '@/features/commentsSlice'
 
 const store = configureStore({
   reducer: {
-    posts: postsReducer
+    posts: postsReducer,
+    comments: commentReducer
   }
 })
 

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from "@/app/store";
 import { useEffect } from "react";
 import { fetchPostsById } from "@/features/postsSlice";
+import Comments from "@/components/posts/Comments";
 
 const Viewpost = () => {
     const dispatch = useAppDispatch()
@@ -31,14 +32,18 @@ const Viewpost = () => {
             </div>
             <div className="min-h-full">
                 {blogs?.body && 
+                <>
                 <Readonlyeditor postContent={blogs?.body}/>
+                <div className="mx-auto p-auto">
+                    <section className="text-[8px] sm:text-xs items-start font-bold sm:px-5">
+                        <h1 className=" header-text my-2">Comments</h1>
+                    </section>
+                    <Comments postId={blogs?.post_id} />
+                </div>
+                </>
                 }
-            </div>
-            {/* commment section */}
-            <div className="mx-auto p-auto">
-                <section className="text-[8px] sm:text-xs items-start font-bold sm:px-5">
-                    <h1 className=" header-text my-2">Comments</h1>
-                </section>
+                {/* commment section */}
+                
             </div>
         </article>
         </>
