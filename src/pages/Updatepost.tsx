@@ -4,11 +4,11 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from "@/app/store";
 import { useEffect,useState } from "react";
-import { updatePost } from "@/features/posts/postsSlice";
+import { updatePost } from "@/features/postsSlice";
 // import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Editor } from "@tiptap/react"
 import {Editonlyeditor} from "@/components/tiptap-templates/simple/Editonlyeditor";
-import { fetchPostsById } from "@/features/posts/postsSlice";
+import { fetchPostsById } from "@/features/postsSlice";
 import { useNavigate } from "react-router-dom";
 import Createpostheader from "@/components/common/Createpostheader";
 

@@ -1,6 +1,6 @@
-import type { PostsState } from '@/features/posts/postsSlice';
+import type { PostsState } from '@/features/postsSlice';
 import { useNavigate } from 'react-router-dom';
-import { deletePost } from "@/features/posts/postsSlice";
+import { deletePost } from "@/features/postsSlice";
 type BlogsProps = Pick<PostsState, 'posts' | 'loading' | 'error'>;
 import { useAppDispatch } from "@/app/store";
 import { useParams } from "react-router-dom";

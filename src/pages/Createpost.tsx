@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import Loader from "@/components/common/Loader"
 // imports for accessing store
 import { useAppDispatch } from '@/app/store'
-import { createPost } from '@/features/posts/postsSlice'
+import { createPost } from '@/features/postsSlice'
 import CreatePostHeader from "@/components/common/Createpostheader"
 
 const Createpost = () => {
