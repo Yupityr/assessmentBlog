@@ -107,7 +107,7 @@ const Comments = ({ postId }: CommentsProps) => {
             >
               {/* Top row */}
               <div className="flex justify-between items-center">
-                <p className="font-medium text-sm">Anonymous User</p>
+                <p className="font-medium text-sm">{comment.profiles?.username}</p>
 
                 {/* Dropdown trigger */}
                 <div className="relative" ref={openDropdownId === comment.id ? dropdownRef : null}>

@@ -8,6 +8,11 @@ export interface Comment {
   id: string;
   content: string;
   user_id: string;
+  profiles:{
+    username:string;
+    avatar_url:string;
+    email:string;
+  } | null;
   post_id: string;
   created_at: string;
 }
@@ -31,7 +36,7 @@ const initialState: CommentState = {
 // CREATE
 export const createComment = createAsyncThunk<
   Comment,
-  { content: string; post_id: string; user_id: string | undefined },
+  { content: string; post_id: string; user_id: string | undefined; },
   { rejectValue: string }
 >("comments/createComment", async (payload, { rejectWithValue }) => {
   const { data, error } = await supabase
@@ -83,7 +88,14 @@ export const fetchCommentsByPostId = createAsyncThunk<
 >("comments/fetchByPostId", async (postId, { rejectWithValue }) => {
   const { data, error } = await supabase
     .from("comments")
-    .select("*")
+    .select(`
+        *,
+        profiles (
+          username,
+          avatar_url,
+          email
+        )
+      `)
     .eq("post_id", postId)
     .order("created_at", { ascending: false });
 
