@@ -10,6 +10,7 @@ import Viewpost from "@/pages/Viewpost";
 import Updatepost from "@/pages/Updatepost";
 import Userposts from "@/pages/Userposts";
 import Authlayout from "@/layouts/Authlayout";
+import ProfileSettings from "@/pages/Profilesettings";
 
 export const router = createBrowserRouter([
     {
@@ -33,9 +34,12 @@ export const router = createBrowserRouter([
                         path: "/post/:postId", 
                         element: <Viewpost/>
                     },
+                    {
+                        path:"/account",
+                        element: <ProfileSettings />
+                    }
                 ]
             },
-            
         ]    
     },
     {

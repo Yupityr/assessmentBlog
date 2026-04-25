@@ -38,7 +38,7 @@ const ProfileDropdown = ({session}: any) => {
             className="flex items-center space-x-2 rounded-full p-1 hover:bg-gray-300 focus:outline-none"
             >
                 <img
-                    src="https://wxlokatxrwhwpyvgcpre.supabase.co/storage/v1/object/public/blogBucket/output-onlinepngtools.png"
+                    src=""
                     alt="Profile"
                     className="h-9 w-9 rounded-full border"
                 />
@@ -61,6 +61,15 @@ const ProfileDropdown = ({session}: any) => {
                         }}
                         >
                         Profile
+                        </div>
+                        <div 
+                        className="w-full text-left px-4 py-2 text-sm   cursor-pointer hover:text-gray-900 text-gray-600"
+                        onClick={() => {
+                            toggleDropdown();
+                            navigate("/account");
+                        }}
+                        >
+                        Settings
                         </div>
 
 
