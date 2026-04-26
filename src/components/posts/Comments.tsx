@@ -107,8 +107,15 @@ const Comments = ({ postId }: CommentsProps) => {
             >
               {/* Top row */}
               <div className="flex justify-between items-center">
-                <p className="font-medium text-sm">{comment.profiles?.username}</p>
-
+                <div className="flex flex-row">
+                  <img
+                    src={comment.profiles?.avatar_url}
+                    alt="Profile"
+                    className="h-9 w-9 rounded-full border"
+                  />
+                  <p className="font-medium text-sm m-auto pl-1">{comment.profiles?.username}</p>
+                </div>
+                
                 {/* Dropdown trigger */}
                 <div className="relative" ref={openDropdownId === comment.id ? dropdownRef : null}>
                   <button
