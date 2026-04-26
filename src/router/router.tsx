@@ -31,14 +31,15 @@ export const router = createBrowserRouter([
                         element: <Userposts/>
                     },
                     {
-                        path: "/post/:postId", 
-                        element: <Viewpost/>
-                    },
-                    {
                         path:"/account",
                         element: <ProfileSettings />
                     }
                 ]
+            },
+    
+            {
+                path: "/post/:postId", 
+                element: <Viewpost/>
             },
         ]    
     },

@@ -7,6 +7,7 @@ import {
   fetchCommentsByPostId,
 } from "@/features/commentsSlice";
 import { useSession } from "@/context/AuthContext";
+import Loader from "../common/Loader";
 
 type CommentsProps = {
   postId: string;
@@ -76,6 +77,8 @@ const Comments = ({ postId }: CommentsProps) => {
   return (
     <div className="w-full max-w-2xl mx-auto mt-6">
       {/* Input */}
+      {session ? 
+      (
       <div className="flex gap-2 mb-4">
         <input
           className="border p-2 w-full rounded"
@@ -94,7 +97,23 @@ const Comments = ({ postId }: CommentsProps) => {
         </button>
       </div>
 
-      {loading && <p className="text-sm text-gray-500">Loading...</p>}
+      ) : (
+      <div className="flex gap-2 mb-4 justify-center">
+        <div className="flex flex-col">
+          <p>
+            User must be logged in to write a comment
+          </p>
+          <a
+            href="/signin"
+            className="bg-gray-400 text-white px-4 m-auto rounded flex "
+          >
+            Sign in
+          </a>
+        </div>
+    </div>)}
+      
+
+      {loading && <Loader /> }
 
       {/* Comments list */}
       <div className="flex flex-col gap-3">
