@@ -40,7 +40,7 @@ const ProfileDropdown = ({session}: any) => {
             className="flex items-center space-x-2 rounded-full p-1 hover:bg-gray-300 focus:outline-none"
             >
                 <img
-                    src={profile?.avatar_url ?? undefined}
+                    src={profile?.avatar_url ?? "https://wxlokatxrwhwpyvgcpre.supabase.co/storage/v1/object/public/blogBucket/output-onlinepngtools.png"}
                     alt="Profile"
                     className="h-9 w-9 rounded-full border"
                 />
