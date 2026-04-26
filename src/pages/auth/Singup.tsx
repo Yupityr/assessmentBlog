@@ -55,18 +55,35 @@ const SignUpPage = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("Creating account...");
-    const { error } = await supabase.auth.signUp({
+
+    const { data, error } = await supabase.auth.signUp({
       email: formValues.email,
       password: formValues.password,
-      options: {
-        data: {
-          display_name: formValues.displayName,
-        },
-      },
     });
+
     if (error) {
       alert(error.message);
+      setStatus("");
+      return;
     }
+
+    // Write username directly to profiles table.
+    // More reliable than reading display_name from a trigger —
+    // triggers often only copy the email prefix, not metadata fields.
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .upsert({
+          id: data.user.id,
+          email: formValues.email,
+          username: formValues.displayName,
+        });
+
+      if (profileError) {
+        console.error("[SignUp] Failed to save username to profiles:", profileError.message);
+      }
+    }
+
     setStatus("");
   };
 
