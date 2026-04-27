@@ -46,7 +46,7 @@ const ProfileDropdown = ({session}: any) => {
                 />
             </div>
         {open && 
-            <div className="relative">
+            <div className="relative z-10">
                 <div className="dropdown shadow-2xl absolute right-0 mt-2 w-52 overflow-hidden rounded-xl">
                 
                     <div className="px-4 py-3">
