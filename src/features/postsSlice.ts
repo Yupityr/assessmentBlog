@@ -8,6 +8,11 @@ export interface Post{
     title:string;
     body:any;
     post_id:string;
+    profiles:{
+        username:string;
+        avatar_url:string;
+        email:string;
+    }
     user_id:string;
     status:string;
     created_at: string;
@@ -155,7 +160,11 @@ export const fetchPostsByUserId = createAsyncThunk<{userPosts:Post[]; pagination
         const from = (currentPage - 1) * postPerPage
         const to = from + postPerPage - 1
         
-        const {data, count, error} = await supabase.from('blogs').select('*',{count: "exact"}).eq('user_id', userId).range(from,to).order('created_at', {ascending:false});
+        const {data, count, error} = await supabase.from('blogs')
+            .select('*, profiles(username, avatar_url,email)',{count: "exact"})
+            .eq('user_id', userId)
+            .range(from,to)
+            .order('created_at', {ascending:false});
 
         if (error) {
             return rejectWithValue(error.message)
@@ -177,7 +186,10 @@ export const fetchPostsByUserId = createAsyncThunk<{userPosts:Post[]; pagination
 export const fetchPostsById = createAsyncThunk<{posts:Post[];post_id:string},string , {rejectValue: string}>('posts/fetchPostsById',
     async (postId, {rejectWithValue}) => {
         
-        const {data, error} = await supabase.from('blogs').select('*').eq('post_id', postId);
+        const {data, error} = await supabase
+            .from('blogs')
+            .select('*, profiles(username, avatar_url, email)')
+            .eq('post_id', postId);
 
         if (error) {
             return rejectWithValue(error.message)
