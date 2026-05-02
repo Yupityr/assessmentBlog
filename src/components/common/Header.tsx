@@ -1,9 +1,14 @@
 import { Link} from "react-router-dom";
 import ProfileDropdown from "./Profiledropdown";
 import { useSession } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Header = () => {
+  const [search, setSearch] = useState("")
   const {session} = useSession();
+  const navigate = useNavigate();
+
   return (
     <header className="header shadow-md flex flex-row justify-between py-4 mb-8">
       <div className=" flex flex-row items-center">
@@ -11,17 +16,24 @@ const Header = () => {
         <p className="mx-2 my-auto text-xl">
             <Link to={'/'} className="temp-logo"> Hermod</Link>
         </p>
-        {/* <form className="mx-2 my-auto" action="">
+        <form className="mx-2 my-auto" onSubmit={(e) => 
+          {
+            e.preventDefault();
+            if (!search.trim()) return;
+            navigate(`/search/${search}`)
+            setSearch("")
+          }
+          }>
           <div className="relative flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute left-3 h-5 w-5 text-gray-400 pointer-events-none">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
             <input
               className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-              placeholder="Search"
+              type="text" value={search} placeholder="Search" onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-        </form> */}
+        </form>
       </div>
       {session &&
         <div className="flex flex-row items-center">

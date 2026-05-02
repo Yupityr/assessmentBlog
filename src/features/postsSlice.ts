@@ -111,15 +111,6 @@ const postSlice = createSlice({
             }
             console.log("hello");
         })
-        // updating a draft
-        // .addCase(updateDraft.fulfilled, (state, action) => {
-        //     const index = state.posts.findIndex(
-        //         post => post.post_id === action.payload.post_id
-        //     )
-        //     if (index !== -1) {
-        //         state.posts[index] = action.payload
-        //     }
-        // })
         // deleting a post
         .addCase(deletePost.fulfilled, (state,action) => {
             state.posts= state.posts.filter(post => post.post_id !== action.payload)

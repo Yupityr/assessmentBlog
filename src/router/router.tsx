@@ -11,6 +11,7 @@ import Updatepost from "@/pages/Updatepost";
 import Userposts from "@/pages/Userposts";
 import Authlayout from "@/layouts/Authlayout";
 import ProfileSettings from "@/pages/Profilesettings";
+import Search from "@/pages/Search";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             {
                 path: "/post/:postId", 
                 element: <Viewpost/>
+            },
+            {
+                path: "/search/:searchInput", 
+                element: <Search/>
             },
         ]    
     },
