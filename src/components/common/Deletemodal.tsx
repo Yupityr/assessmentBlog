@@ -15,7 +15,7 @@ export default function Deletemodal({ isOpen, onClose, onConfirm, title, childre
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl p-6 w-[300px]"
+        className="dropdown rounded-2xl p-6 w-[300px]"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-lg font-semibold mb-4">{title}</h2>

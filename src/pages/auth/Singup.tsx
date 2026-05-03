@@ -100,12 +100,12 @@ const SignUpPage = () => {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Create your account</h1>
+          <h1 className="text-2xl font-semibold ">Create your account</h1>
           <p className="text-sm text-gray-500 mt-1">Join Hermod to get started</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm">
+        <div className="border border-gray-200 rounded-xl p-7 shadow-sm">
           <form onSubmit={handleSignUp} className="space-y-5">
 
             {/* Display name */}

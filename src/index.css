@@ -6,6 +6,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  height: 100%;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -45,7 +46,7 @@ button:focus-visible {
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
+  html {
     color: #3E2A1F;
     background-color: #f8f5f1;
   }
@@ -75,7 +76,7 @@ button:focus-visible {
   }
 }
 @media (prefers-color-scheme: dark) {
-  #root {
+  html {
     color: #b6d6e6;
     background-color: #18181a;
   }
