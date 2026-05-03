@@ -6,7 +6,7 @@
   }
 
   > img:not([data-type="emoji"] img) {
-    margin: 2rem 0;
+    margin: 2rem auto;
     outline: 0.125rem solid transparent;
     border-radius: var(--tt-radius-xs, 0.25rem);
   }
@@ -17,7 +17,7 @@
 
   // Thread image handling
   .tiptap-thread:has(> img) {
-    margin: 2rem 0;
+    margin: 2rem auto;
 
     img {
       outline: 0.125rem solid transparent;
@@ -26,6 +26,6 @@
   }
 
   .tiptap-thread img {
-    margin: 0;
+    margin: 0 auto;
   }
 }
