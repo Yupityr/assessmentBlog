@@ -19,8 +19,7 @@ import { Button } from "@/components/tiptap-ui-primitive/button"
 import { Badge } from "@/components/tiptap-ui-primitive/badge"
 
 export interface CodeBlockButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseCodeBlockConfig {
+  extends Omit<ButtonProps, "type">, UseCodeBlockConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -93,7 +92,7 @@ export const CodeBlockButton = forwardRef<
     return (
       <Button
         type="button"
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         role="button"
         disabled={!canToggle}

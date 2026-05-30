@@ -18,8 +18,7 @@ import { Button } from "@/components/tiptap-ui-primitive/button"
 import { Badge } from "@/components/tiptap-ui-primitive/badge"
 
 export interface MarkButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseMarkConfig {
+  extends Omit<ButtonProps, "type">, UseMarkConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -94,7 +93,7 @@ export const MarkButton = forwardRef<HTMLButtonElement, MarkButtonProps>(
       <Button
         type="button"
         disabled={!canToggle}
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         data-disabled={!canToggle}
         role="button"

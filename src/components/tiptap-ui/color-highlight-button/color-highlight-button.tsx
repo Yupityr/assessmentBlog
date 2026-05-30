@@ -22,8 +22,7 @@ import { Badge } from "@/components/tiptap-ui-primitive/badge"
 import "@/components/tiptap-ui/color-highlight-button/color-highlight-button.scss"
 
 export interface ColorHighlightButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseColorHighlightConfig {
+  extends Omit<ButtonProps, "type">, UseColorHighlightConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -87,6 +86,7 @@ export const ColorHighlightButton = forwardRef<
       onClick,
       children,
       style,
+      useColorValue = false,
       ...buttonProps
     },
     ref
@@ -102,6 +102,7 @@ export const ColorHighlightButton = forwardRef<
     } = useColorHighlight({
       editor,
       highlightColor,
+      useColorValue,
       label: text || `Toggle highlight (${highlightColor})`,
       hideWhenUnavailable,
       mode,
@@ -133,7 +134,7 @@ export const ColorHighlightButton = forwardRef<
     return (
       <Button
         type="button"
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         role="button"
         tabIndex={-1}

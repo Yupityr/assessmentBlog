@@ -1,4 +1,3 @@
-import { supabase } from "@/services/supabaseClient"
 import type { Node as PMNode } from "@tiptap/pm/model"
 import type { Transaction } from "@tiptap/pm/state"
 import {
@@ -364,8 +363,6 @@ export const handleImageUpload = async (
   onProgress?: (event: { progress: number }) => void,
   abortSignal?: AbortSignal
 ): Promise<string> => {
-  const ext = file.name.split(".").pop()?.toLowerCase() ?? "png"
-  const fileName = `${crypto.randomUUID()}.${ext}`
   // Validate file
   if (!file) {
     throw new Error("No file provided")
@@ -379,11 +376,6 @@ export const handleImageUpload = async (
 
   // For demo/testing: Simulate upload progress. In production, replace the following code
   // with your own upload implementation.
-  const {data, error: uploadError} = await supabase.storage
-    .from('blogBucket')
-    .upload(`private/${fileName}`, file)
-
-
   for (let progress = 0; progress <= 100; progress += 10) {
     if (abortSignal?.aborted) {
       throw new Error("Upload cancelled")
@@ -391,17 +383,10 @@ export const handleImageUpload = async (
     await new Promise((resolve) => setTimeout(resolve, 500))
     onProgress?.({ progress })
   }
-  
-  if (uploadError && !data) {
-    throw uploadError;
-  }
 
-  if (!data) {
-  throw new Error("Upload failed: no data returned")
-  } 
-  // return storage URL + file name
-  return `https://wxlokatxrwhwpyvgcpre.supabase.co/storage/v1/object/public/blogBucket/private/${encodeURIComponent(fileName)}`
+  return "/images/tiptap-ui-placeholder-image.jpg"
 }
+
 type ProtocolOptions = {
   /**
    * The protocol scheme to be registered.
@@ -624,4 +609,32 @@ export function getSelectedNodesOfType(
   }
 
   return results
+}
+
+/**
+ * Clamps a value between min and max bounds
+ */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(value, max))
+}
+
+export function getSelectedBlockNodes(editor: Editor): PMNode[] {
+  const { doc } = editor.state
+  const { from, to } = editor.state.selection
+
+  const blocks: PMNode[] = []
+  const seen = new Set<number>()
+
+  doc.nodesBetween(from, to, (node, pos) => {
+    if (!node.isBlock) return
+
+    if (!seen.has(pos)) {
+      seen.add(pos)
+      blocks.push(node)
+    }
+
+    return false
+  })
+
+  return blocks
 }

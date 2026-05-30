@@ -16,8 +16,7 @@ import type { ListType, UseListConfig } from "@/components/tiptap-ui/list-button
 import { LIST_SHORTCUT_KEYS, useList } from "@/components/tiptap-ui/list-button"
 
 export interface ListButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseListConfig {
+  extends Omit<ButtonProps, "type">, UseListConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -91,7 +90,7 @@ export const ListButton = forwardRef<HTMLButtonElement, ListButtonProps>(
     return (
       <Button
         type="button"
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         role="button"
         tabIndex={-1}

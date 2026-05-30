@@ -96,10 +96,10 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
+        <HeadingDropdownMenu levels={[1, 2, 3, 4]} modal={false} />
         <ListDropdownMenu
           types={["bulletList", "orderedList", "taskList"]}
-          portal={isMobile}
+          modal={false}
         />
         <BlockquoteButton />
         <CodeBlockButton />
@@ -288,6 +288,5 @@ export function SimpleEditor({ onEditorReady }: SimpleEditorProps) {
     </div>
   )
 }
-
 
 

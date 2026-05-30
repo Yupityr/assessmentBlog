@@ -58,6 +58,30 @@
 
       ol {
         list-style: lower-roman;
+
+        ol {
+          list-style: decimal;
+
+          ol {
+            list-style: lower-alpha;
+
+            ol {
+              list-style: lower-roman;
+
+              ol {
+                list-style: decimal;
+
+                ol {
+                  list-style: lower-alpha;
+
+                  ol {
+                    list-style: lower-roman;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -71,6 +95,30 @@
 
       ul {
         list-style: square;
+
+        ul {
+          list-style: disc;
+
+          ul {
+            list-style: circle;
+
+            ul {
+              list-style: square;
+
+              ul {
+                list-style: disc;
+
+                ul {
+                  list-style: circle;
+
+                  ul {
+                    list-style: square;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

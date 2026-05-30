@@ -99,11 +99,15 @@ export function shouldShowListDropdown(params: {
 }): boolean {
   const { editor, hideWhenUnavailable, listInSchema, canToggleAny } = params
 
-  if (!listInSchema || !editor) {
-    return false
+  if (!editor) return false
+
+  if (!hideWhenUnavailable) {
+    return true
   }
 
-  if (hideWhenUnavailable && !editor.isActive("code")) {
+  if (!listInSchema) return false
+
+  if (!editor.isActive("code")) {
     return canToggleAny
   }
 

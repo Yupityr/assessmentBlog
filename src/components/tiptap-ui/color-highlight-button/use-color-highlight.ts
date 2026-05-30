@@ -23,51 +23,61 @@ export const HIGHLIGHT_COLORS = [
   {
     label: "Default background",
     value: "var(--tt-bg-color)",
+    colorValue: "#ffffff",
     border: "var(--tt-bg-color-contrast)",
   },
   {
     label: "Gray background",
     value: "var(--tt-color-highlight-gray)",
+    colorValue: "#f8f8f7",
     border: "var(--tt-color-highlight-gray-contrast)",
   },
   {
     label: "Brown background",
     value: "var(--tt-color-highlight-brown)",
+    colorValue: "#f4eeee",
     border: "var(--tt-color-highlight-brown-contrast)",
   },
   {
     label: "Orange background",
     value: "var(--tt-color-highlight-orange)",
+    colorValue: "#fbecdd",
     border: "var(--tt-color-highlight-orange-contrast)",
   },
   {
     label: "Yellow background",
     value: "var(--tt-color-highlight-yellow)",
+    colorValue: "#fef9c3",
     border: "var(--tt-color-highlight-yellow-contrast)",
   },
   {
     label: "Green background",
     value: "var(--tt-color-highlight-green)",
+    colorValue: "#dcfce7",
     border: "var(--tt-color-highlight-green-contrast)",
   },
   {
     label: "Blue background",
     value: "var(--tt-color-highlight-blue)",
+    colorValue: "#e0f2fe",
     border: "var(--tt-color-highlight-blue-contrast)",
   },
   {
     label: "Purple background",
     value: "var(--tt-color-highlight-purple)",
+    colorValue: "#f3e8ff",
     border: "var(--tt-color-highlight-purple-contrast)",
   },
   {
     label: "Pink background",
     value: "var(--tt-color-highlight-pink)",
+    colorValue: "#fcf1f6",
     border: "var(--tt-color-highlight-pink-contrast)",
   },
   {
     label: "Red background",
     value: "var(--tt-color-highlight-red)",
+    colorValue: "#ffe4e6",
     border: "var(--tt-color-highlight-red-contrast)",
   },
 ]
@@ -104,6 +114,11 @@ export interface UseColorHighlightConfig {
    */
   mode?: HighlightMode
   /**
+   * When true, uses the actual color value (colorValue) instead of CSS variable (value).
+   * @default false
+   */
+  useColorValue?: boolean
+  /**
    * Called when the highlight is applied.
    */
   onApplied?: ({
@@ -124,6 +139,21 @@ export function pickHighlightColorsByValue(values: string[]) {
   return values
     .map((value) => colorMap.get(value))
     .filter((color): color is (typeof HIGHLIGHT_COLORS)[number] => !!color)
+}
+
+/**
+ * Gets the appropriate color value based on configuration
+ */
+export function getHighlightColorValue(
+  color: string,
+  useColorValue: boolean = false
+): string {
+  if (!useColorValue) return color
+
+  const colorItem = HIGHLIGHT_COLORS.find(
+    (c) => c.value === color || c.colorValue === color
+  )
+  return colorItem?.colorValue || color
 }
 
 /**
@@ -216,15 +246,22 @@ export function shouldShowButton(props: {
 }): boolean {
   const { editor, hideWhenUnavailable, mode } = props
 
-  if (!editor || !editor.isEditable) return false
+  if (!editor) return false
 
+  if (!hideWhenUnavailable) {
+    return true
+  }
+
+  if (!editor.isEditable) return false
+
+  // hideWhenUnavailable=true: check schema/extension availability
   if (mode === "mark") {
     if (!isMarkInSchema("highlight", editor)) return false
   } else {
     if (!isExtensionAvailable(editor, ["nodeBackground"])) return false
   }
 
-  if (hideWhenUnavailable && !editor.isActive("code")) {
+  if (!editor.isActive("code")) {
     return canColorHighlight(editor, mode)
   }
 
@@ -238,6 +275,7 @@ export function useColorHighlight(config: UseColorHighlightConfig) {
     highlightColor,
     hideWhenUnavailable = false,
     mode = "mark",
+    useColorValue = false,
     onApplied,
   } = config
 
@@ -245,7 +283,10 @@ export function useColorHighlight(config: UseColorHighlightConfig) {
   const isMobile = useIsBreakpoint()
   const [isVisible, setIsVisible] = useState<boolean>(true)
   const canColorHighlightState = canColorHighlight(editor, mode)
-  const isActive = isColorHighlightActive(editor, highlightColor, mode)
+  const actualColor = highlightColor
+    ? getHighlightColorValue(highlightColor, useColorValue)
+    : highlightColor
+  const isActive = isColorHighlightActive(editor, actualColor, mode)
 
   useEffect(() => {
     if (!editor) return
@@ -264,7 +305,7 @@ export function useColorHighlight(config: UseColorHighlightConfig) {
   }, [editor, hideWhenUnavailable, mode])
 
   const handleColorHighlight = useCallback(() => {
-    if (!editor || !canColorHighlightState || !highlightColor || !label)
+    if (!editor || !canColorHighlightState || !actualColor || !label)
       return false
 
     if (mode === "mark") {
@@ -281,10 +322,10 @@ export function useColorHighlight(config: UseColorHighlightConfig) {
         const success = editor
           .chain()
           .focus()
-          .toggleMark("highlight", { color: highlightColor })
+          .toggleHighlight({ color: actualColor })
           .run()
         if (success) {
-          onApplied?.({ color: highlightColor, label, mode })
+          onApplied?.({ color: actualColor, label, mode })
         }
         return success
       }, 0)
@@ -294,15 +335,15 @@ export function useColorHighlight(config: UseColorHighlightConfig) {
       const success = editor
         .chain()
         .focus()
-        .toggleNodeBackgroundColor(highlightColor)
+        .toggleNodeBackgroundColor(actualColor)
         .run()
 
       if (success) {
-        onApplied?.({ color: highlightColor, label, mode })
+        onApplied?.({ color: actualColor, label, mode })
       }
       return success
     }
-  }, [canColorHighlightState, highlightColor, editor, label, onApplied, mode])
+  }, [canColorHighlightState, actualColor, editor, label, onApplied, mode])
 
   const handleRemoveHighlight = useCallback(() => {
     const success = removeHighlight(editor, mode)

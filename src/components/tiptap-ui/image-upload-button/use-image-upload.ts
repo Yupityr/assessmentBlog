@@ -83,9 +83,14 @@ export function shouldShowButton(props: {
   const { editor, hideWhenUnavailable } = props
 
   if (!editor || !editor.isEditable) return false
+
+  if (!hideWhenUnavailable) {
+    return true
+  }
+
   if (!isExtensionAvailable(editor, "imageUpload")) return false
 
-  if (hideWhenUnavailable && !editor.isActive("code")) {
+  if (!editor.isActive("code")) {
     return canInsertImage(editor)
   }
 

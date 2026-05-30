@@ -19,8 +19,7 @@ import { Button } from "@/components/tiptap-ui-primitive/button"
 import { Badge } from "@/components/tiptap-ui-primitive/badge"
 
 export interface BlockquoteButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseBlockquoteConfig {
+  extends Omit<ButtonProps, "type">, UseBlockquoteConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -93,7 +92,7 @@ export const BlockquoteButton = forwardRef<
     return (
       <Button
         type="button"
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         role="button"
         tabIndex={-1}

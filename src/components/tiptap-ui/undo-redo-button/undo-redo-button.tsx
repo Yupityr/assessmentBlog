@@ -24,8 +24,7 @@ import { Button } from "@/components/tiptap-ui-primitive/button"
 import { Badge } from "@/components/tiptap-ui-primitive/badge"
 
 export interface UndoRedoButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseUndoRedoConfig {
+  extends Omit<ButtonProps, "type">, UseUndoRedoConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -96,7 +95,7 @@ export const UndoRedoButton = forwardRef<
       <Button
         type="button"
         disabled={!canExecute}
-        data-style="ghost"
+        variant="ghost"
         data-disabled={!canExecute}
         role="button"
         tabIndex={-1}

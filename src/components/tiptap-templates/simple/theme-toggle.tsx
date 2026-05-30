@@ -32,7 +32,7 @@ export function ThemeToggle() {
     <Button
       onClick={toggleDarkMode}
       aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-      data-style="ghost"
+      variant="ghost"
     >
       {isDarkMode ? (
         <MoonStarIcon className="tiptap-button-icon" />

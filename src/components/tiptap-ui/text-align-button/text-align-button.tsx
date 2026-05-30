@@ -27,8 +27,7 @@ type IconProps = React.SVGProps<SVGSVGElement>
 type IconComponent = ({ className, ...props }: IconProps) => React.ReactElement
 
 export interface TextAlignButtonProps
-  extends Omit<ButtonProps, "type">,
-    UseTextAlignConfig {
+  extends Omit<ButtonProps, "type">, UseTextAlignConfig {
   /**
    * Optional text to display alongside the icon.
    */
@@ -113,7 +112,7 @@ export const TextAlignButton = forwardRef<
       <Button
         type="button"
         disabled={!canAlign}
-        data-style="ghost"
+        variant="ghost"
         data-active-state={isActive ? "on" : "off"}
         data-disabled={!canAlign}
         role="button"

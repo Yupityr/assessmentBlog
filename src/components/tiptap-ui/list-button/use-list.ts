@@ -15,6 +15,7 @@ import { ListTodoIcon } from "@/components/tiptap-icons/list-todo-icon"
 // --- Lib ---
 import {
   findNodePosition,
+  getSelectedBlockNodes,
   isNodeInSchema,
   isNodeTypeSelected,
   isValidPosition,
@@ -150,8 +151,27 @@ export function toggleList(editor: Editor | null, type: ListType): boolean {
     let state = view.state
     let tr = state.tr
 
+    const blocks = getSelectedBlockNodes(editor)
+
+    // In case a selection contains multiple blocks, we only allow
+    // toggling to nide if there's exactly one block selected
+    // we also dont block the canToggle since it will fall back to the bottom logic
+    const isPossibleToTurnInto =
+      selectionWithinConvertibleTypes(editor, [
+        "paragraph",
+        "heading",
+        "bulletList",
+        "orderedList",
+        "taskList",
+        "blockquote",
+        "codeBlock",
+      ]) && blocks.length === 1
+
     // No selection, find the the cursor position
-    if (state.selection.empty || state.selection instanceof TextSelection) {
+    if (
+      (state.selection.empty || state.selection instanceof TextSelection) &&
+      isPossibleToTurnInto
+    ) {
       const pos = findNodePosition({
         editor,
         node: state.selection.$anchor.node(1),
@@ -228,10 +248,17 @@ export function shouldShowButton(props: {
 }): boolean {
   const { editor, type, hideWhenUnavailable } = props
 
-  if (!editor || !editor.isEditable) return false
+  if (!editor) return false
+
+  if (!hideWhenUnavailable) {
+    return true
+  }
+
+  if (!editor.isEditable) return false
+
   if (!isNodeInSchema(type, editor)) return false
 
-  if (hideWhenUnavailable && !editor.isActive("code")) {
+  if (!editor.isActive("code")) {
     return canToggleList(editor, type)
   }
 
