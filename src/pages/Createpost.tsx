@@ -1,7 +1,7 @@
 // import { useDispatch, useSelector} from 'react-redux'
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import { Editor } from "@tiptap/react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Loader from "@/components/common/Loader"
 // imports for accessing store
@@ -16,6 +16,10 @@ const Createpost = () => {
     const [body,setBody] = useState<Editor | null>(null)
     const [status,setStatus] = useState(false)
     const navigate = useNavigate()
+    
+    const handleEditorReady = useCallback((editor: Editor) => {
+        setBody(editor)
+    }, [])
 
     const handlePost = async (status: 'published' | 'draft') => {
         setStatus(true)
@@ -36,10 +40,10 @@ const Createpost = () => {
             <header>
                 <CreatePostHeader onPost={handlePost} disabled={!title}/>
             </header>
-            <div className="flex max-w-2xl my-2 mx-4 gap-5">
+            <div className="flex my-2 mx-4 gap-5">
                 <input id="title" className="text-3xl w-full" type="text" placeholder="Insert Title" onChange={(e) => setTitle(e.target.value)}/>
             </div>
-            <SimpleEditor onEditorReady={setBody} />
+            <SimpleEditor onEditorReady={handleEditorReady} />
             {status && 
                 (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
                     <div>

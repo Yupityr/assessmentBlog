@@ -54,7 +54,7 @@ const Updatepost = () => {
         <>
             <Createpostheader onPost={saveEdit} disabled={!title}/>
             <div className="flex justify-between my-2 mx-4 ">
-                <input id="title" value={title ?? ""} className="text-3xl" type="text" onChange={(e) => setTitle(e.target.value)}/>
+                <input id="title" value={title ?? ""} className="text-3xl w-full" type="text" onChange={(e) => setTitle(e.target.value)}/>
             </div>
             <article>
                 {blogs?.body &&

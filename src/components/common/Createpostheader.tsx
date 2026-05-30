@@ -15,10 +15,10 @@ const CreatePostHeader = ({onPost, disabled}: ChildProps) => {
             </div>
             <div className="flex flex-row items-center">
             <nav className="flex flex-row mx-2">
-                <button className="ml-2 bg-blue-500 px-4 py-2 rounded-md flex flex-row border-none focus:border-none h" onClick={() => {onPost('draft')}} disabled={disabled}>
+                <button onMouseDown={(e) => e.preventDefault()} className="ml-2 bg-blue-500 px-4 py-2 rounded-md flex flex-row border-none focus:border-none h" onClick={() => {onPost('draft')}} disabled={disabled}>
                     Save
                 </button>
-                <button className="ml-2 bg-blue-500 px-4 py-2 rounded-md flex flex-row border-none focus:border-none h" onClick={() => {onPost('published')}} disabled={disabled}>
+                <button onMouseDown={(e) => e.preventDefault()} className="ml-2 bg-blue-500 px-4 py-2 rounded-md flex flex-row border-none focus:border-none h" onClick={() => {onPost('published')}} disabled={disabled}>
                     Post
                 </button>
             </nav>
